@@ -2,6 +2,8 @@ from .commonsettings import *
 
 DEBUG = True
 
+# ALLOWED_HOSTS = []
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -15,7 +17,7 @@ DEBUG = True
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "TrendLab_dev",
+        "NAME": "hectorvidal",
         "USER": "hectorvidal",
         "PASSWORD": "",
         "HOST": "localhost",
