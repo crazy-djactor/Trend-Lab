@@ -2,7 +2,7 @@ from .commonsettings import *
 
 DEBUG = False
 
-# ALLOWED_HOSTS = ["TrendLab-test.eu-west-1.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["TrendLab-dev.eu-west-1.elasticbeanstalk.com"]
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
