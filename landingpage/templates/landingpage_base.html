@@ -26,18 +26,23 @@
 
     <body>
         <!-- Loader -->
-        <div id="preloader">
+        <!-- <div id="preloader">
             <div id="status">
                 <div class="spinner">
                     <div class="double-bounce1"></div>
                     <div class="double-bounce2"></div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Loader -->
 
-        {% include 'landingpage_navbar.html' %}
-
+        {% if 'signup/' in request.get_full_path or 'login/' in request.get_full_path or 'recovery-password/' in request.get_full_path %}
+        {% else %}
+            {% include 'landingpage_navbar.html' %}
+        {% endif %}
+        <!--  -->
+        <!-- LandingPage -->
+        <!--  -->
         {% block home %}
         {% endblock %}
 
@@ -53,7 +58,58 @@
         {% block enterprise %}
         {% endblock %}
 
-        {% include 'landingpage_footer.html' %}
+
+        <!--  -->
+        <!-- PageDetails -->
+        <!--  -->
+
+        {% block pagedetails %}
+        {% endblock %}
+
+
+        <!--  -->
+        <!-- PagePrivacy -->
+        <!--  -->
+
+        {% block privacy %}
+        {% endblock %}
+
+        <!--  -->
+        <!-- TermsAndConditionsPage -->
+        <!--  -->
+
+        {% block termsandconditions %}
+        {% endblock %}
+
+
+        <!--  -->
+        <!-- SignupPage -->
+        <!--  -->
+
+        {% block signup %}
+        {% endblock %}
+
+
+        <!--  -->
+        <!-- SignupPage -->
+        <!--  -->
+
+        {% block login %}
+        {% endblock %}
+
+
+        <!--  -->
+        <!-- SignupPage -->
+        <!--  -->
+
+        {% block recoverypassword %}
+        {% endblock %}
+
+        {% if 'signup/' in request.get_full_path or 'login/' in request.get_full_path or 'recovery-password/' in request.get_full_path %}
+        {% else %}
+            {% include 'landingpage_footer.html' %}
+        {% endif %}
+
 
         <!-- Back to top -->
         <!-- <a href="#" class="back-to-top rounded text-center" id="back-to-top">

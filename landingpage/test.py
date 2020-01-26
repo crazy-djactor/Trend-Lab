@@ -18,12 +18,15 @@ kw_list = ["Blockchain"]
 # Google News
 #
 # i.g. "canned wine" after:2019-03-29 before:2019-04-07
-googlenews = GoogleNews()
-googlenews.search('APPL')
-print(googlenews.result())
-
+# googlenews = GoogleNews()
+# googlenews.search('APPL')
+# print(googlenews.result())
 # googlenews.getpage(1)
 
+# Wikipedia
+#
+import wikipedia
+print(wikipedia.summary(kw_list[0]))
 exit()
 elapsed = time.time() - t
 print(elapsed)

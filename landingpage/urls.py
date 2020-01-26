@@ -18,4 +18,10 @@ from . import views
 
 urlpatterns = [
 	path('', views.index, name='index'),
+    path('detailpage/', views.detailpage, name='detailpage'),
+    path('privacy/', views.privacy, name='privacy'),
+    path('terms-and-conditions/', views.termsandconditions, name='termsandcondition'),
+    path('signup/', views.signup, name='signup'),
+    path('login/', views.login, name='login'),
+    path('recovery-password/', views.recoverypassword, name='recoverypassword'),
 ]
