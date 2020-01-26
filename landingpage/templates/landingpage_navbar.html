@@ -20,35 +20,40 @@
         <div>
             <a class="logo" href="/">TrendLab<span class="text-primary">.</span></a>
         </div>
-        <!-- <div class="buy-button">
-            <a href="#pricing" class="btn btn-primary">Get Started</a>
-        </div> -->
-        <!-- End Logo container-->
+        <!-- End Logo container -->
+
 
         <div id="navigation">
+            {% if user.is_authenticated %}
+                <div class="buy-button pr-4">
+                    <a href="/" class="btn btn-outline-light">Log Out</a>
+                </div>
+                <div class="buy-button">
+                    <a href="" class="btn"><img src="{% static 'images/client/05.jpg' %}" class="img-fluid avatar avatar-ex-sm mr-2 rounded-pill" alt="">user.name user.surname</a>
+                </div>
+            {% else %}
+                <div class="buy-button">
+                    <a href="#pricing" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="buy-button pr-4">
+                    <a href="/login" class="btn btn-outline-light">Log In</a>
+                </div>
+            {% endif %}
 
-            <div class="buy-button pr">
-                <a href="/" class="btn btn-primary">Get Started</a>
-            </div>
-            <div class="buy-button pr-4">
-                <a href="/" class="btn btn-outline-light">Log In</a>
-            </div>
             <!-- Navigation Menu-->
-            <ul class="navigation-menu" >
-                <li><a href="#home">Search</a></li>
-                <li><a href="#pricing">Pricing</a></li>
-                <li><a href="#benefits">Benefits</a></li>
+            <ul class="navigation-menu">
+                <li><a href="/">Search</a></li>
+                <li><a href="/#pricing">Pricing</a></li>
+                <li><a href="/#benefits">Benefits</a></li>
             </ul><!--end navigation menu-->
 
             <div class="buy-menu-btn d-none">
               <a href="#pricing" class="badge badge-light mr-2 mb-2">Get Started</a>
             </div><!--end login button-->
             <div class="buy-menu-btn d-none">
-                <a href="/" class="badge badge-light mr-2 mb-2">Log In</a>
+                <a href="/login" class="badge badge-light mr-2 mb-2">Log In</a>
             </div>
-            <!-- <div class="buy-menu-btn d-none mr-4">
-                <a href="/" class="btn btn-light">Log In</a>
-            </div> -->
+
         </div><!--end navigation-->
     </div><!--end container-->
 </header><!--end header-->
