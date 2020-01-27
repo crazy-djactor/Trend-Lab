@@ -21,3 +21,6 @@ def login(request):
 
 def recoverypassword(request):
 	return render(request, 'recovery-password.html')
+
+def settings(request):
+	return render(request, 'settings.html')
