@@ -29,41 +29,41 @@
                                     <!-- <h4 class="mb-4">Signup</h4> -->
                                     <a class="logo text-dark" href="/">TrendLab<span class="text-primary">.</span></a>
                                 </div>
-                                <form class="login-form">
+                                <form class="login-form" onsubmit="return false">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group position-relative">
                                                 <label>First name <span class="text-danger">*</span></label>
                                                 <i class="mdi mdi-account ml-3 icons"></i>
-                                                <input type="text" class="form-control pl-5" placeholder="First Name" name="s" required="">
+                                                <input type="text" id="firstname" class="form-control pl-5" placeholder="First Name" name="s" required="">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group position-relative">
                                                 <label>Last name <span class="text-danger">*</span></label>
                                                 <i class="mdi mdi-account ml-3 icons"></i>
-                                                <input type="text" class="form-control pl-5" placeholder="Last Name" name="s" required="">
+                                                <input type="text" id="lastname" class="form-control pl-5" placeholder="Last Name" name="s" required="">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group position-relative">
                                                 <label>Your Email <span class="text-danger">*</span></label>
                                                 <i class="mdi mdi-account ml-3 icons"></i>
-                                                <input type="email" class="form-control pl-5" placeholder="Email" name="email" required="">
+                                                <input type="email" id="email" class="form-control pl-5" placeholder="Email" name="email" required="">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group position-relative">
                                                 <label>Password <span class="text-danger">*</span></label>
                                                 <i class="mdi mdi-key ml-3 icons"></i>
-                                                <input type="password" class="form-control pl-5" placeholder="Password" required="">
+                                                <input type="password" id="password1" class="form-control pl-5" placeholder="Password" required="">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group position-relative">
                                                 <label>Confirm Password <span class="text-danger">*</span></label>
                                                 <i class="mdi mdi-key ml-3 icons"></i>
-                                                <input type="password" class="form-control pl-5" placeholder="Confirm Password" required="">
+                                                <input type="password" id="password2" class="form-control pl-5" placeholder="Confirm Password" required="">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -75,7 +75,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <button class="btn btn-primary w-100">Register</button>
+                                            <button class="btn btn-primary w-100" onclick="register()">Register</button>
                                         </div>
                                         <div class="col-lg-12 mt-4 text-center">
                                             <h6>Or Signup With</h6>
