@@ -28,8 +28,16 @@
                 <!-- <div class="buy-button pr-4">
                     <a href="/" class="btn btn-outline-light">Log Out</a>
                 </div> -->
+                <div class="buy-button dropdown">
+                    <button href="" class="btn btn-white dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><img src="{% static 'images/user/avatar.png' %}" class="img-fluid avatar avatar-ex-sm mr-2 rounded-pill" alt="">user.name</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Interests/Alerts</a>
+                      <a class="dropdown-item" href="/settings">Settings</a>
+                      <a class="dropdown-item" href="#">Log out</a>
+                    </div>
+                </div>
                 <div class="buy-button">
-                    <a href="/settings" class="btn"><img src="{% static 'images/user/avatar.png' %}" class="img-fluid avatar avatar-ex-sm mr-2 rounded-pill" alt="">user.name</a>
+                    <span class="badge badge-primary rounded mr-2 mb-2">3 Reports</span>
                 </div>
             {% else %}
                 <div class="buy-button">
