@@ -25,11 +25,11 @@
 
         <div id="navigation">
             {% if user.is_authenticated %}
-                <div class="buy-button pr-4">
+                <!-- <div class="buy-button pr-4">
                     <a href="/" class="btn btn-outline-light">Log Out</a>
-                </div>
+                </div> -->
                 <div class="buy-button">
-                    <a href="" class="btn"><img src="{% static 'images/client/05.jpg' %}" class="img-fluid avatar avatar-ex-sm mr-2 rounded-pill" alt="">user.name user.surname</a>
+                    <a href="/settings" class="btn"><img src="{% static 'images/user/avatar.png' %}" class="img-fluid avatar avatar-ex-sm mr-2 rounded-pill" alt="">user.name</a>
                 </div>
             {% else %}
                 <div class="buy-button">
