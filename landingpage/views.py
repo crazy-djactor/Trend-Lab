@@ -5,7 +5,7 @@ from .decorators import login_required
 def index(request):
 	return render(request, 'landingpage.html')
 
-#@login_required
+@login_required
 def detailpage(request):
 	return render(request, 'detailpage.html')
 

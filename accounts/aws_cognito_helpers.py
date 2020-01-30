@@ -44,13 +44,13 @@ def sign_up(username, password, firstname, lastname):
                 }
             ]
             )
-        print(resp)
     except client.exceptions.UsernameExistsException as e:
-        return USER_EXISTS
+        print(e)
+        return None
     except Exception as e:
         print(e)
-        return ERROR
-    return SUCCESS
+        return None 
+    return resp
 
 def initiate_auth(username, password):
     try:

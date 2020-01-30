@@ -18,6 +18,7 @@ from . import views
 
 urlpatterns = [
     path('signup/', views.signup, name='signup'),
+    path('confirm-email/', views.confirm_email_notification, name='confirm_email_prompt'),
     path('login/', views.login, name='login'),
     path('recovery-password/', views.recoverypassword, name='recoverypassword'),
 ]

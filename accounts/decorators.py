@@ -1,5 +1,5 @@
 from functools import wraps
-from django.http import redirect
+from django.shortcuts import redirect
 
 def login_required(f):
     """
