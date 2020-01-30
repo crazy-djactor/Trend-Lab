@@ -24,7 +24,10 @@ def login_required(f):
     """
     def wrapper(request, *args, **kwargs):
         #decode jwt token
-        token = request.COOKIES['IdToken']
+        try:
+            token = request.COOKIES['IdToken']
+        except:
+            return redirect('/login')
 
         if is_token_valid(token):
             return f(request,*args, **kwargs)
