@@ -62,7 +62,7 @@
                     </ul>
                     <div class="col-6 dropdown mt-2">
                         <button class="btn btn-outline-light dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          All countries
+                          All Regions
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                           <a class="dropdown-item" href="#">Action</a>
@@ -322,29 +322,50 @@
                                                 <thead>
                                                     <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">First</th>
-                                                    <th scope="col">Last</th>
-                                                    <th scope="col">Handle</th>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">@username</th>
+                                                    <th scope="col">Followers</th>
+                                                    <th scope="col">Quality Audience</th>
+                                                    <th scope="col">ER</th>
+                                                    <th scope="col">AQS</th>
+                                                    <th scope="col">Topics</th>
+                                                    <th scope="col"></th>
+
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
+                                                        <td>img</td>
+                                                        <td>@caloriefixes</td>
+                                                        <td>2,206.53K</td>
+                                                        <td>1,612.09K</td>
+                                                        <td>1.14%</td>
+                                                        <td>Very Good</td>
+                                                        <td>Food</td>
+                                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2">download report</a></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">2</th>
-                                                        <td>Jacob</td>
-                                                        <td>Thornton</td>
-                                                        <td>@fat</td>
+                                                        <td>img</td>
+                                                        <td>@caloriefixes</td>
+                                                        <td>2,206.53K</td>
+                                                        <td>1,612.09K</td>
+                                                        <td>1.14%</td>
+                                                        <td>Very Good</td>
+                                                        <td>Food</td>
+                                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2">download report</a></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">3</th>
-                                                        <td>Harry</td>
-                                                        <td>Potter</td>
-                                                        <td>@hpt</td>
+                                                        <td>img</td>
+                                                        <td>@caloriefixes</td>
+                                                        <td>2,206.53K</td>
+                                                        <td>1,612.09K</td>
+                                                        <td>1.14%</td>
+                                                        <td>Very Good</td>
+                                                        <td>Food</td>
+                                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2">download report</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -359,77 +380,79 @@
                             <div class="col mt-4 pt-2">
                                 <div class="component-wrapper rounded shadow">
                                     <div class="pr-4 pl-4 pt-4 pb-0">
-                                        <h4 class="title mb-0">Related Topics</h4>
+                                        <h4 class="title mb-0">Top Related Websites</h4>
                                     </div>
                                     <div class="p-4">
-                                        <div class="col-lg-4 col-md-4">
-                                            <div class="blog position-relative overflow-hidden shadow rounded">
-                                                <div class="position-relative">
-                                                    <img src="{% static 'images/blog/01.jpg' %}" class="img-fluid rounded-top" alt="">
-                                                    <div class="overlay rounded-top bg-dark"></div>
-                                                </div>
-                                                <div class="content p-4">
-                                                    <h4><a href="javascript:void(0)" class="title text-dark">Design your apps in your own way</a></h4>
-                                                    <div class="post-meta mt-3">
-                                                        <a href="javascript:void(0)" class="text-muted float-right readmore">Read More <i class="mdi mdi-chevron-right"></i></a>
-                                                        <ul class="list-unstyled mb-0">
-                                                            <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-muted like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
-                                                            <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
-                                                        </ul>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="blog position-relative overflow-hidden shadow rounded">
+                                                    <div class="position-relative">
+                                                        <img src="{% static 'images/blog/01.jpg' %}" class="img-fluid rounded-top" alt="">
+                                                        <div class="overlay rounded-top bg-dark"></div>
+                                                    </div>
+                                                    <div class="content p-4">
+                                                        <h4><a href="javascript:void(0)" class="title text-dark">Design your apps in your own way</a></h4>
+                                                        <div class="post-meta mt-3">
+                                                            <a href="javascript:void(0)" class="text-muted float-right readmore">Read More <i class="mdi mdi-chevron-right"></i></a>
+                                                            <ul class="list-unstyled mb-0">
+                                                                <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-muted like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
+                                                                <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="author">
+                                                        <small class="text-light user d-block"><i class="mdi mdi-account"></i> Calvin Carlo</small>
+                                                        <small class="text-light date"><i class="mdi mdi-calendar-check"></i> 13th August, 2019</small>
                                                     </div>
                                                 </div>
-                                                <div class="author">
-                                                    <small class="text-light user d-block"><i class="mdi mdi-account"></i> Calvin Carlo</small>
-                                                    <small class="text-light date"><i class="mdi mdi-calendar-check"></i> 13th August, 2019</small>
-                                                </div>
-                                            </div>
-                                        </div><!--end col-->
+                                            </div><!--end col-->
 
-                                        <div class="col-lg-4 col-md-4">
-                                            <div class="blog position-relative overflow-hidden shadow rounded">
-                                                <div class="position-relative">
-                                                    <img src="{% static 'images/blog/01.jpg' %}" class="img-fluid rounded-top" alt="">
-                                                    <div class="overlay rounded-top bg-dark"></div>
-                                                </div>
-                                                <div class="content p-4">
-                                                    <h4><a href="javascript:void(0)" class="title text-dark">How apps is changing the IT world</a></h4>
-                                                    <div class="post-meta mt-3">
-                                                        <a href="javascript:void(0)" class="text-muted float-right readmore">Read More <i class="mdi mdi-chevron-right"></i></a>
-                                                        <ul class="list-unstyled mb-0">
-                                                            <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-muted like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
-                                                            <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
-                                                        </ul>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="blog position-relative overflow-hidden shadow rounded">
+                                                    <div class="position-relative">
+                                                        <img src="{% static 'images/blog/01.jpg' %}" class="img-fluid rounded-top" alt="">
+                                                        <div class="overlay rounded-top bg-dark"></div>
+                                                    </div>
+                                                    <div class="content p-4">
+                                                        <h4><a href="javascript:void(0)" class="title text-dark">How apps is changing the IT world</a></h4>
+                                                        <div class="post-meta mt-3">
+                                                            <a href="javascript:void(0)" class="text-muted float-right readmore">Read More <i class="mdi mdi-chevron-right"></i></a>
+                                                            <ul class="list-unstyled mb-0">
+                                                                <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-muted like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
+                                                                <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="author">
+                                                        <small class="text-light user d-block"><i class="mdi mdi-account"></i> Calvin Carlo</small>
+                                                        <small class="text-light date"><i class="mdi mdi-calendar-check"></i> 13th August, 2019</small>
                                                     </div>
                                                 </div>
-                                                <div class="author">
-                                                    <small class="text-light user d-block"><i class="mdi mdi-account"></i> Calvin Carlo</small>
-                                                    <small class="text-light date"><i class="mdi mdi-calendar-check"></i> 13th August, 2019</small>
-                                                </div>
-                                            </div>
-                                        </div><!--end col-->
+                                            </div><!--end col-->
 
-                                        <div class="col-lg-4 col-md-4">
-                                            <div class="blog position-relative overflow-hidden shadow rounded">
-                                                <div class="position-relative">
-                                                    <img src="{% static 'images/blog/01.jpg' %}" class="img-fluid rounded-top" alt="">
-                                                    <div class="overlay rounded-top bg-dark"></div>
-                                                </div>
-                                                <div class="content p-4">
-                                                    <h4><a href="javascript:void(0)" class="title text-dark">Smartest Applications for Business</a></h4>
-                                                    <div class="post-meta mt-3">
-                                                        <a href="javascript:void(0)" class="text-muted float-right readmore">Read More <i class="mdi mdi-chevron-right"></i></a>
-                                                        <ul class="list-unstyled mb-0">
-                                                            <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-muted like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
-                                                            <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
-                                                        </ul>
+                                            <div class="col-lg-4 col-md-4">
+                                                <div class="blog position-relative overflow-hidden shadow rounded">
+                                                    <div class="position-relative">
+                                                        <img src="{% static 'images/blog/01.jpg' %}" class="img-fluid rounded-top" alt="">
+                                                        <div class="overlay rounded-top bg-dark"></div>
+                                                    </div>
+                                                    <div class="content p-4">
+                                                        <h4><a href="javascript:void(0)" class="title text-dark">Smartest Applications for Business</a></h4>
+                                                        <div class="post-meta mt-3">
+                                                            <a href="javascript:void(0)" class="text-muted float-right readmore">Read More <i class="mdi mdi-chevron-right"></i></a>
+                                                            <ul class="list-unstyled mb-0">
+                                                                <li class="list-inline-item mr-2"><a href="javascript:void(0)" class="text-muted like"><i class="mdi mdi-heart-outline mr-1"></i>33</a></li>
+                                                                <li class="list-inline-item"><a href="javascript:void(0)" class="text-muted comments"><i class="mdi mdi-comment-outline mr-1"></i>08</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="author">
+                                                        <small class="text-light user d-block"><i class="mdi mdi-account"></i> Calvin Carlo</small>
+                                                        <small class="text-light date"><i class="mdi mdi-calendar-check"></i> 13th August, 2019</small>
                                                     </div>
                                                 </div>
-                                                <div class="author">
-                                                    <small class="text-light user d-block"><i class="mdi mdi-account"></i> Calvin Carlo</small>
-                                                    <small class="text-light date"><i class="mdi mdi-calendar-check"></i> 13th August, 2019</small>
-                                                </div>
-                                            </div>
-                                        </div><!--end col-->
+                                            </div><!--end col-->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
