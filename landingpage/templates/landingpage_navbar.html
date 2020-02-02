@@ -25,11 +25,19 @@
 
         <div id="navigation">
             {% if user.is_authenticated %}
-                <div class="buy-button pr-4">
+                <!-- <div class="buy-button pr-4">
                     <a href="/" class="btn btn-outline-light">Log Out</a>
+                </div> -->
+                <div class="buy-button dropdown">
+                    <button href="" class="btn btn-white dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"data-offset="9"><img src="{% static 'images/user/avatar.png' %}" class="img-fluid avatar avatar-ex-sm mr-2 rounded-pill" alt="">user.name</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="/settings" style="line-height: 40px;">Interests / Alerts</a>
+                      <a class="dropdown-item" href="/settings#pills-cloud" style="line-height: 40px;">Settings</a>
+                      <a class="dropdown-item" href="/logout" style="line-height: 40px;">Log out</a>
+                    </div>
                 </div>
                 <div class="buy-button">
-                    <a href="" class="btn"><img src="{% static 'images/client/05.jpg' %}" class="img-fluid avatar avatar-ex-sm mr-2 rounded-pill" alt="">user.name user.surname</a>
+                    <span class="badge badge-primary rounded mr-2 mb-2">3 Reports</span>
                 </div>
             {% else %}
                 <div class="buy-button">

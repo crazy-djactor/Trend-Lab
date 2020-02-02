@@ -105,6 +105,15 @@
         {% block recoverypassword %}
         {% endblock %}
 
+
+        <!--  -->
+        <!-- SignupPage -->
+        <!--  -->
+
+        {% block settings %}
+        {% endblock %}
+
+
         {% if 'signup/' in request.get_full_path or 'login/' in request.get_full_path or 'recovery-password/' in request.get_full_path %}
         {% else %}
             {% include 'landingpage_footer.html' %}
