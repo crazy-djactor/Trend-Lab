@@ -1,0 +1,98 @@
+{% extends 'landingpage_base.html' %}
+{% load static %}
+
+{% block metatag %}
+    <title>TrendLab. - Trends and Insights Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta name="description" content="Premium Bootstrap 4 Landing Page Template" /> -->
+    <!-- <meta name="keywords" content="bootstrap 4, premium, marketing, multipurpose" /> -->
+    <meta content="Shreethemes" name="author" />
+
+{% endblock %}
+
+{% block login %}
+
+    <!-- Hero Start -->
+    <section class="bg-home">
+        <div class="home-center">
+            <div class="home-desc-center">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-7 col-md-6">
+                            <div class="mr-lg-5">
+                                <img src="{% static 'images/user/login.png' %}" class="img-fluid d-block mx-auto" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-6 mt-4 mt-sm-0 pt-2 pt-sm-0">
+                            <div class="login-page bg-white rounded p-4">
+                                <div class="text-center">
+                                    <!-- <h4 class="mb-4">Login</h4> -->
+                                    <a class="logo text-dark" href="/">TrendLab<span class="text-primary">.</span></a>
+
+                                </div>
+                                <form class="login-form" method="POST" action="{% url 'login' %}">
+                                  {% csrf_token %}
+                                    {% if messages %}
+                                    {% for message in messages %}
+                                        <span style="color:red">{{message}}</span>
+                                    {% endfor %}
+                                    {% endif %}
+                                  {{ form.non_field_errors }}
+
+                                  {{ form.errors }}
+                                  {{ form.source }}
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-group position-relative">
+                                                <label>Your Email <span class="text-danger">*</span>
+                                                  {{ form.email.errors }}
+                                                </label>
+                                                <i class="mdi mdi-account ml-3 icons"></i>
+                                                {{ form.email }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <div class="form-group position-relative">
+                                                <label>Password <span class="text-danger">*</span>
+                                                  {{ form.password.errors }}
+                                                </label>
+                                                <i class="mdi mdi-key ml-3 icons"></i>
+                                                {{ form.password }}
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12">
+                                            <p class="float-right forgot-pass"><a href="/recovery-password" class="text-dark font-weight-bold">Forgot password ?</a></p>
+                                            <div class="form-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    {{ form.remember_me }}
+                                                    <label class="custom-control-label" for="customCheck1">Remember me</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12 mb-0">
+                                            <button class="btn btn-primary w-100" type="submit">Sign in</button>
+                                        </div>
+                                        <div class="col-lg-12 mt-4 text-center">
+                                            <h6>Or Login With</h6>
+                                            <ul class="list-unstyled social-icon mb-0 mt-3">
+                                                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i class="mdi mdi-facebook" title="Facebook"></i></a></li>
+                                                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i class="mdi mdi-google-plus" title="Google"></i></a></li>
+                                                <li class="list-inline-item"><a href="javascript:void(0)" class="rounded"><i class="mdi mdi-github-circle" title="Github"></i></a></li>
+                                            </ul><!--end icon-->
+                                        </div>
+                                        <div class="col-12 text-center">
+                                            <p class="mb-0 mt-3"><small class="text-dark mr-2">Don't have an account ?</small> <a href="/signup" class="text-dark font-weight-bold">Sign Up</a></p>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div><!---->
+                        </div> <!--end col-->
+                    </div><!--end row-->
+                </div> <!--end container-->
+            </div>
+        </div>
+    </section><!--end section-->
+    <!-- Hero End -->
+{% endblock %}

@@ -1,9 +1,11 @@
 from django.shortcuts import render
+from .decorators import login_required
 
 # Create your views here.
 def index(request):
 	return render(request, 'landingpage.html')
 
+@login_required
 def detailpage(request):
 	return render(request, 'detailpage.html')
 
