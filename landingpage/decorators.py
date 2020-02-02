@@ -26,6 +26,8 @@ def login_required(f):
         #decode jwt token
         try:
             token = request.COOKIES['IdToken']
+            if token == '':
+                return redirect('/login')
         except:
             return redirect('/login')
 

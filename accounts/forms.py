@@ -42,3 +42,23 @@ class LoginForm(forms.Form):
     email = forms.EmailField(max_length=100, widget=forms.TextInput(attrs=email_attrs))
     password = forms.CharField(max_length=80, widget=forms.TextInput(attrs=password_attrs))
     remember_me = forms.BooleanField(initial=False, required=False,widget=forms.CheckboxInput(attrs=agree_tos_attrs))
+
+class ResetPasswordForm(forms.Form):
+    email_attrs = {
+    "type":"email", "id":"email", "class":"form-control pl-5", "placeholder":"Enter Your Email Address", "name":"email", "required":""
+    }
+    email = forms.EmailField(max_length=100, widget=forms.TextInput(attrs=email_attrs))
+
+class NewPasswordForm(forms.Form):
+    email_attrs = {
+    "type":"email", "id":"email", "class":"form-control pl-5", "placeholder":"Enter Your Email Address", "name":"email", "required":""
+    }
+    password_attrs = {
+    "type":"password", "id":"password", "class":"form-control pl-5", "placeholder":"new password", "name":"s", "required":""
+    }
+    code_attrs = {
+    "type":"text", "id":"code", "class":"form-control pl-5", "placeholder":"code", "required":""
+    }
+    email = forms.EmailField(max_length=100, widget=forms.TextInput(attrs=email_attrs))
+    code = forms.CharField(max_length=100, widget=forms.TextInput(attrs=code_attrs))
+    password = forms.CharField(max_length=80, widget=forms.TextInput(attrs=password_attrs))

@@ -49,7 +49,7 @@ def sign_up(username, password, firstname, lastname):
         return None
     except Exception as e:
         print(e)
-        return None 
+        return None
     return resp
 
 def initiate_auth(username, password):
@@ -73,6 +73,88 @@ def initiate_auth(username, password):
         print(e)
         return None, "Unknown error"
     return resp, None
+
+
+def reset_password(username):
+    """
+    Given a username (email in this case), call on cognito to resend this users password.
+    An email is automatically sent to the user so as to reset their password
+
+    Args:
+        username(str): A username (email) of the account whose password needs to be reset
+
+    Returns:
+        Boolean: True if successful, False otherwise. This allows for redirection to page notifying them to check email for reset link
+    """
+    try:
+        resp = client.forgot_password(
+            ClientId=CLIENT_ID,
+            SecretHash=get_secret_hash(username),
+            Username=username
+            )
+        return True
+    except client.exceptions.NotAuthorizedException as e:
+        print("An error occurred")
+        return False
+    except Exception as e:
+        print(e)
+        return False
+
+
+def set_new_password(code, username, password):
+    """
+    Using the code sent to the user email, resets user's password
+
+    Args:
+        code(str): Conformation code sent to the users email
+        username(str): Email whose password is being reset
+        password(str): Suitable new password
+
+    Returns:
+        Boolean()
+    """
+    try:
+        resp = client.confirm_forgot_password(
+            ClientId=CLIENT_ID,
+            SecretHash=get_secret_hash(username),
+            Username=username,
+            ConfirmationCode=code,
+            Password=password
+            )
+        print(resp)
+        return True
+    except client.exceptions.NotAuthorizedException as e:
+        print("An error occurred, Not authorized ")
+        return False
+    except Exception as e:
+        print(e)
+        return False
+
+def logout_user(username, token):
+    """
+    Given a username and token, calls on forget device method to invalidate the token and effectively log the user out
+
+    Args:
+        username(str): Email of user to be logged out
+        token(str): The IdToken stored in session cookie used for auth
+
+    Returns:
+        Boolean: True if successful, false otherwise
+
+    """
+    try:
+        resp = client.admin_forget_device(
+            UserPoolId=USER_POOL_ID,
+            Username=username,
+            DeviceKey=token
+            )
+        return True
+    except client.exceptions.NotAuthorizedException as e:
+        print("Not authorized ")
+        return False
+    except Exception as e:
+        print(e)
+        return False
 
 def lambda_handler(event, context):
     global client

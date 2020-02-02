@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import SignupForm, LoginForm
-from .aws_cognito_helpers import initiate_auth, sign_up
+from .forms import SignupForm, LoginForm, ResetPasswordForm, NewPasswordForm
+from .aws_cognito_helpers import initiate_auth, sign_up, reset_password, set_new_password, logout_user
 from django.contrib import messages
+from .decorators import login_required
 
 # Create your views here.
 def signup(request):
@@ -33,11 +34,47 @@ def signup(request):
 	return render(request, 'signup.html', context)
 
 def confirm_email_notification(request):
+
+
 	return render(request, 'conf-email.html')
 
 def recoverypassword(request):
-	return render(request, 'recovery-password.html')
+	if request.method == 'POST':
+		form = ResetPasswordForm(request.POST)
+		if form.is_valid():
+			email = form.cleaned_data.get('email')
+			status = reset_password(email)
+			if status:
+				return redirect('/reset-password')
+			else:
+				pass
+	else:
+		form = ResetPasswordForm()
 
+	context = {
+		"form":form
+	}
+	return render(request, 'recovery-password.html', context)
+
+def reset_pass(request):
+	if request.method == 'POST':
+		form = NewPasswordForm(request.POST)
+		if form.is_valid():
+			email = form.cleaned_data.get('email')
+			code = form.cleaned_data.get('code')
+			password = form.cleaned_data.get('password')
+			status = set_new_password(code,email, password)
+			if status:
+				return redirect('/login')
+			else:
+				pass
+	else:
+		form = NewPasswordForm()
+
+	context = {
+		"form":form
+	}
+	return render(request, 'reset-pass.html', context)
 
 def login(request):
 	if request.method == "POST":
@@ -64,3 +101,11 @@ def login(request):
 	}
 
 	return render(request, 'login.html', context)
+
+@login_required
+def logout(request, username, idtoken):
+	#status = logout_user(username, idtoken)
+	#remove cookie
+	resp = redirect('/detailpage')
+	resp.set_cookie('IdToken', '')
+	return resp
