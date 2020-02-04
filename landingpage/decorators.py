@@ -31,13 +31,36 @@ def login_required(f):
         except:
             return redirect('/login')
 
-        if is_token_valid(token):
-            return f(request,*args, **kwargs)
+        status, claims = is_token_valid(token)
+        if status:
+            return f(request,claims['email'], idtoken=token, *args, **kwargs)
         else:
             return redirect('/login')
 
     return wrapper
 
+#optional login decorator
+def login_optional(f):
+    """
+    Injects user details into view but does not redirect logged out users to login page
+
+    """
+    def wrapper(request, *args, **kwargs):
+        #decode jwt token
+        try:
+            token = request.COOKIES['IdToken']
+            if token == '':
+                return f(request,None, idtoken=None, *args, **kwargs)
+        except:
+            return f(request,None, idtoken=None, *args, **kwargs)
+
+        status, claims = is_token_valid(token)
+        if status:
+            return f(request,claims['email'], idtoken=token, *args, **kwargs)
+        else:
+            return f(request,None, idtoken=None, *args, **kwargs)
+
+    return wrapper
 
 def is_token_valid(token):
     headers = jwt.get_unverified_headers(token)
@@ -75,4 +98,4 @@ def is_token_valid(token):
         return False
 
     print(claims)
-    return True
+    return True, claims 

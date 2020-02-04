@@ -1,13 +1,20 @@
 from django.shortcuts import render
-from .decorators import login_required
+from .decorators import login_required, login_optional
 
 # Create your views here.
-def index(request):
-	return render(request, 'landingpage.html')
+@login_optional
+def index(request, username, idtoken):
+	context = {
+		"username": username
+	}
+	return render(request, 'landingpage.html', context)
 
 @login_required
-def detailpage(request):
-	return render(request, 'detailpage.html')
+def detailpage(request, username, idtoken):
+	context = {
+		"username": username
+	}
+	return render(request, 'detailpage.html', context)
 
 def privacy(request):
 	return render(request, 'privacy.html')
