@@ -1,0 +1,12 @@
+<script>
+//get idtoken from url
+const urlParams = window.location.href;
+console.log(urlParams);
+const token = urlParams.split('#')[1].split('=')[1].split('&')[0];
+console.log(token);
+//set the cookie
+document.cookie = "IdToken=" + token + ";path=/";
+//redirect to detailpage
+window.location = '/detailpage';
+
+</script>
