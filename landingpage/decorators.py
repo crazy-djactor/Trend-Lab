@@ -73,7 +73,7 @@ def is_token_valid(token):
             break
     if key_index == -1:
         print('Public key not found.')
-        return False
+        return False, None
 
     public_key = jwk.construct(keys[key_index])
     message, encoded_signature = str(token).rsplit('.', 1)
@@ -82,7 +82,7 @@ def is_token_valid(token):
     # verify the signature
     if not public_key.verify(message.encode("utf8"), decoded_signature):
         print('Signature could not be verified')
-        return False
+        return False, None
 
     #get claims - these are key,value pairs of email, usernames etc
     claims = jwt.get_unverified_claims(token)
@@ -90,12 +90,12 @@ def is_token_valid(token):
     #check expiration
     if time.time() > claims['exp']:
         print('Tokens expired.')
-        return False
+        return False, None
 
     #verify audience
     if claims['aud'] != app_client_id:
         print('Token was not issued for this audience')
-        return False
+        return False, None
 
     print(claims)
-    return True, claims 
+    return True, claims
