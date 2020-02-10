@@ -97,5 +97,4 @@ def is_token_valid(token):
         print('Token was not issued for this audience')
         return False, None
 
-    print(claims)
     return True, claims

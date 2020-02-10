@@ -1,0 +1,24 @@
+.autocomplete-container{
+  margin-top:-19px;
+  padding-top:19px;
+  border:;
+  text-align: left;
+  color:#3c4858;
+  box-shadow: 0 0 3px rgba(0,0,0,0.15) !important;
+}
+.autocomplete-element{
+  padding: 1px 0px;
+  padding-left: 30px;
+}
+
+.autocomplete-element:hover{
+  background: rgba(120,120,120,0.1);
+  cursor: pointer;
+}
+.autocomplete-term{
+
+}
+.autocomplete-term-topic{
+  color: #5881df !important;
+  font-size: 0.85rem;
+}

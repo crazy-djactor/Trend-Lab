@@ -22,9 +22,11 @@ urlpatterns = [
     path('privacy/', views.privacy, name='privacy'),
     path('terms-and-conditions/', views.termsandconditions, name='termsandcondition'),
     path('settings/', views.settings, name='settings'),
+    path('search/autocomplete/', views.search_autocomplete, name='autocomplete'),
+
 
 ]
-# 
+#
 # path('signup/', views.signup, name='signup'),
 # path('login/', views.login, name='login'),
 # path('recovery-password/', views.recoverypassword, name='recoverypassword'),

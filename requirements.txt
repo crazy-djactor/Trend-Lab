@@ -6,3 +6,8 @@ sqlparse==0.3.0
 python-jose
 boto3
 python-dotenv
+requests
+pytrends
+wikipedia
+GoogleNews
+pycountry

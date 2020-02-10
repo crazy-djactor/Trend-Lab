@@ -19,11 +19,14 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-12 text-center">
                                 <div class="text-center subcribe-form pt-5 pb-5 pt-md-3 pb-md-3 aos-init aos-animate" data-aos="fade-up" data-aos-duration="1800">
-                                    <form>
+                                    <form autocomplete="off" id="search-form">
                                         <div class="form-group mb-0">
-                                          <input class="shadow bg-white rounded-pill" required="" placeholder="Enter a search term or a topic">
+                                          <input id="trend-search-input" class="shadow bg-white rounded-pill" required="" placeholder="Enter a search term or a topic">
                                           <!-- <input type="email" id="email" name="email" class="shadow bg-white rounded-pill" required="" placeholder="Enter a search term or a topic"> -->
-                                          <button type="submit" class="btn btn-primary rounded-pill">Search</button>
+                                          <button class="btn btn-primary rounded-pill">Search</button>
+                                        </div>
+                                        <div class="form-group mb-0 autocomplete-container" id="autocomplete-parent-div" style="display:none;">
+
                                         </div>
                                     </form>
                                 </div>
@@ -52,7 +55,7 @@
         <section class="section pt-0">
             <div class="container">
                 <div class="row pt-5">
-                    <h4 class="col-6 title"> Search Term Name </h4>
+                    <h4 class="col-6 title"> {{ search_term_name }} </h4>
                     <div class="col-6">
                         <a href="#" class="btn btn-outline-primary float-right"> Download PDF </a>
                     </div>
@@ -62,12 +65,29 @@
                     </ul>
                     <div class="col-6 dropdown mt-2">
                         <button class="btn btn-outline-light dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Worldwide
+                          {% if current_country %}
+                           {% if current_country == ' ' %}
+                            Worldwide
+                           {% else%}
+                           {{ current_country}}
+                           {% endif %}
+
+                           {% else %}
+                           Worldwide
+                           {% endif %}
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                          <a class="dropdown-item" href="#">United States</a>
-                          <a class="dropdown-item" href="#">United Kingdom</a>
-                          <a class="dropdown-item" href="#">Something else here</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height:100px;overflow-y:scroll;">
+                          {% if current_country != '' %}
+                            <a class="dropdown-item" href="#" onclick="switchTrendLocale('')">Worldwide</a>
+                          {% endif %}
+                          {% if countries %}
+                          {% for country in countries %}
+                            <a class="dropdown-item" href="#" onclick="switchTrendLocale('{{country.alpha_2}}')">{{country.name}}</a>
+                          {% endfor %}
+                          {% else %}
+                          <a class="dropdown-item" href="#" onclick="switchTrendLocale('US')">United States</a>
+                          <a class="dropdown-item" href="#" onclick="switchTrendLocale('GB')">United Kingdom</a>
+                          {% endif %}
                         </div>
                     </div>
                 </div>
@@ -77,7 +97,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <ul class="nav nav-pills nav-justified flex-column flex-sm-row rounded" id="pills-tab" role="tablist">
-                                    <li class="nav-item">
+                                    <li class="nav-item" onclick="toggleTimePeriod('5y')">
                                         <a class="nav-link rounded active" id="pills-cloud-tab" data-toggle="pill" href="#pills-cloud" role="tab" aria-controls="pills-cloud" aria-selected="false">
                                             <div class="text-center pt-1 pb-1">
                                                 <h4 class="title font-weight-normal mb-0">5 Years</h4>
@@ -85,7 +105,7 @@
                                         </a><!--end nav link-->
                                     </li><!--end nav item-->
 
-                                    <li class="nav-item">
+                                    <li class="nav-item" onclick="toggleTimePeriod('12m')">
                                         <a class="nav-link rounded" id="pills-smart-tab" data-toggle="pill" href="#pills-smart" role="tab" aria-controls="pills-smart" aria-selected="false">
                                             <div class="text-center pt-1 pb-1">
                                                 <h4 class="title font-weight-normal mb-0">12 Months</h4>
@@ -93,7 +113,7 @@
                                         </a><!--end nav link-->
                                     </li><!--end nav item-->
 
-                                    <li class="nav-item">
+                                    <li class="nav-item" onclick="toggleTimePeriod('30d')">
                                         <a class="nav-link rounded" id="pills-apps-tab" data-toggle="pill" href="#pills-apps" role="tab" aria-controls="pills-apps" aria-selected="false">
                                             <div class="text-center pt-1 pb-1">
                                                 <h4 class="title font-weight-normal mb-0">30 Days</h4>
@@ -108,20 +128,21 @@
                             <div class="col-12">
                                 <div class="tab-content" id="pills-tabContent">
                                     <div class="tab-pane fade show active" id="pills-cloud" role="tabpanel" aria-labelledby="pills-cloud-tab">
-                                        <div class="col-12 text-center">
-                                            <img src="{% static 'images/work/single.jpg' %}" class="img-fluid rounded" alt="">
+                                        <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
+                                            <canvas id="5yearinterest"></canvas>
+
                                         </div>
                                     </div><!--end teb pane-->
 
                                     <div class="tab-pane fade" id="pills-smart" role="tabpanel" aria-labelledby="pills-smart-tab">
-                                        <div class="col-12 text-center">
-                                            <img src="{% static 'images/work/single.jpg' %}" class="img-fluid rounded" alt="">
+                                        <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
+                                          <canvas id="12monthinterest"></canvas>
                                         </div>
                                     </div><!--end teb pane-->
 
                                     <div class="tab-pane fade" id="pills-apps" role="tabpanel" aria-labelledby="pills-apps-tab">
-                                        <div class="col-12 text-center">
-                                            <img src="{% static 'images/work/single.jpg' %}" class="img-fluid rounded" alt="">
+                                        <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
+                                          <canvas id="30dayinterest"></canvas>
                                         </div>
                                     </div><!--end teb pane-->
                                 </div><!--end tab content-->
@@ -134,7 +155,13 @@
                     <div class="col-md-10 mt-4 pt-2">
                         <h6><i class="mdi mdi-tag text-primary mr-1"></i><a href="javscript:void(0)" class="text-primary">Search Term</a>, <a href="javscript:void(0)" class="text-primary">Topic</a></h6>
                         <div class="bg-light rounded p-4">
-                            <p class="text-muted font-italic mb-0">" Here goes a long description One disadvantage of Lorum Ipsum is that in Latin certain letters appear more frequently than others - which creates a distinct visual impression. Moreover, in Latin only words at the beginning of sentences are capitalized; this means that Lorem Ipsum cannot accurately represent, for example, German, in which all nouns are capitalized. Thus, Lorem Ipsum has only limited suitability as a visual filler for German texts. If the fill text is intended to illustrate the characteristics of different typefaces, it sometimes makes sense to select texts containing the various letters and symbols specific to the output language. "</p>
+                            <p class="text-muted font-italic mb-0">"
+                              {% if wikipedia_summary %}
+                                {{ wikipedia_summary }}
+                              {% else %}
+                              No summary available ...
+                              {% endif %}
+                             "</p>
                         </div>
 
                         <div class="row">
@@ -146,18 +173,27 @@
                                     <!-- RECENT POST -->
                                     <div class="widget p-4">
                                         <div class="">
+                                        {% if top_news %}
+                                          {% for news_item in top_news %}
+                                            <div class="clearfix post-recent">
+                                                <div class="post-recent-thumb float-left"> <a href="{{ news_item.link }}"> <img alt="img" src="{{ news_item.img }}" class="img-fluid rounded"></a></div>
+                                                <div class="post-recent-content float-left"><a href="{{ news_item.link }}">{{ news_item.title }} ...</a><span class="text-muted mt-2">{{ news_item.date }}</span></div>
+                                            </div>
+                                          {% endfor %}
+                                          {% else %}
                                             <div class="clearfix post-recent">
                                                 <div class="post-recent-thumb float-left"> <a href="jvascript:void(0)"> <img alt="img" src="{% static 'images/blog/07.jpg' %}" class="img-fluid rounded"></a></div>
-                                                <div class="post-recent-content float-left"><a href="jvascript:void(0)">Consultant Business</a><span class="text-muted mt-2">15th June, 2019</span></div>
+                                                <div class="post-recent-content float-left"><a href="jvascript:void(0)">Title</a><span class="text-muted mt-2">Date</span></div>
                                             </div>
                                             <div class="clearfix post-recent pt-3">
                                                 <div class="post-recent-thumb float-left"> <a href="jvascript:void(0)"> <img alt="img" src="{% static 'images/blog/08.jpg' %}" class="img-fluid rounded"></a></div>
-                                                <div class="post-recent-content float-left"><a href="jvascript:void(0)">Look On The Glorious Balance</a> <span class="text-muted mt-2">15th June, 2019</span></div>
+                                                <div class="post-recent-content float-left"><a href="jvascript:void(0)">Title</a> <span class="text-muted mt-2">Date</span></div>
                                             </div>
                                             <div class="clearfix post-recent pt-3">
                                                 <div class="post-recent-thumb float-left"> <a href="jvascript:void(0)"> <img alt="img" src="{% static 'images/blog/01.jpg' %}" class="img-fluid rounded"></a></div>
-                                                <div class="post-recent-content float-left"><a href="jvascript:void(0)">Research Financial.</a> <span class="text-muted mt-2">15th June, 2019</span></div>
+                                                <div class="post-recent-content float-left"><a href="jvascript:void(0)">Title</a> <span class="text-muted mt-2">Date</span></div>
                                             </div>
+                                          {% endif %}
                                         </div>
                                     </div>
                                     <!-- RECENT POST -->
@@ -170,50 +206,64 @@
                             <div class="col mt-4 pt-2">
                                 <div class="component-wrapper rounded shadow">
                                     <div class="pr-4 pl-4 pt-4 pb-0">
-                                        <h4 class="title mb-0">Top 5 Regions</h4>
+                                        <h4 class="title mb-0">Top Regions</h4>
                                     </div>
-
                                     <div class="p-4">
+                                    {% if region_interest %}
+                                    {% for region in region_interest %}
+                                    <div class="progress-box mt-4">
+                                        <h6 class="title text-muted">{{ forloop.counter }}. {{ region.1 }}</h6>
+                                        <div class="progress">
+                                            <div class="progress-bar position-relative bg-primary" style="width:{{region.0}}%;">
+                                                <div class="progress-value d-block text-muted h6">{{ region.0 }}%</div>
+                                            </div>
+                                        </div>
+                                    </div><!--end process box-->
+                                    {% endfor %}
+
+
+                                    {% else %}
                                         <div class="progress-box">
-                                            <h6 class="title text-muted">1. United Kingdom</h6>
+                                            <h6 class="title text-muted"></h6>
                                             <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:84%;">
-                                                    <div class="progress-value d-block text-muted h6">84%</div>
+                                                <div class="progress-bar position-relative bg-primary" style="width:0%;">
+                                                    <div class="progress-value d-block text-muted h6">0%</div>
                                                 </div>
                                             </div>
                                         </div><!--end process box-->
                                         <div class="progress-box mt-4">
-                                            <h6 class="title text-muted">2. United Stated</h6>
+                                            <h6 class="title text-muted"></h6>
                                             <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:84%;">
-                                                    <div class="progress-value d-block text-muted h6">84%</div>
+                                                <div class="progress-bar position-relative bg-primary" style="width:0%;">
+                                                    <div class="progress-value d-block text-muted h6">0%</div>
                                                 </div>
                                             </div>
                                         </div><!--end process box-->
                                         <div class="progress-box mt-4">
-                                            <h6 class="title text-muted">3. Kenya</h6>
+                                            <h6 class="title text-muted"></h6>
                                             <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:75%;">
-                                                    <div class="progress-value d-block text-muted h6">75%</div>
+                                                <div class="progress-bar position-relative bg-primary" style="width:0%;">
+                                                    <div class="progress-value d-block text-muted h6">0%</div>
                                                 </div>
                                             </div>
                                         </div><!--end process box-->
                                         <div class="progress-box mt-4">
-                                            <h6 class="title text-muted">4. Spain</h6>
+                                            <h6 class="title text-muted"></h6>
                                             <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:79%;">
-                                                    <div class="progress-value d-block text-muted h6">79%</div>
+                                                <div class="progress-bar position-relative bg-primary" style="width:0%;">
+                                                    <div class="progress-value d-block text-muted h6">0%</div>
                                                 </div>
                                             </div>
                                         </div><!--end process box-->
                                         <div class="progress-box mt-4">
-                                            <h6 class="title text-muted">5. China</h6>
+                                            <h6 class="title text-muted"></h6>
                                             <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:95%;">
-                                                    <div class="progress-value d-block text-muted h6">95%</div>
+                                                <div class="progress-bar position-relative bg-primary" style="width:0%;">
+                                                    <div class="progress-value d-block text-muted h6">0%</div>
                                                 </div>
                                             </div>
                                         </div><!--end process box-->
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div><!--end col-->
@@ -233,30 +283,39 @@
                                                 <thead>
                                                     <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">First</th>
-                                                    <th scope="col">Last</th>
-                                                    <th scope="col">Handle</th>
+                                                    <th scope="col">Topic</th>
+                                                    <th scope="col">Rank</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                  {% if related_topics %}
+                                                    {% for topic in related_topics %}
                                                     <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
+                                                        <th scope="row">{{ forloop.counter }}</th>
+                                                        <td>{{ topic.5 }} - {{ topic.6 }}</td>
+                                                        <td>{{ topic.1 }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                  {% else %}
+                                                    <tr>
+                                                        <th scope="row"></th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Jacob</td>
-                                                        <td>Thornton</td>
-                                                        <td>@fat</td>
+                                                        <th scope="row"></th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Harry</td>
-                                                        <td>Potter</td>
-                                                        <td>@hpt</td>
+                                                        <th scope="row"></th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
+                                                    {% endif %}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -276,30 +335,39 @@
                                                 <thead>
                                                     <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">First</th>
-                                                    <th scope="col">Last</th>
-                                                    <th scope="col">Handle</th>
+                                                    <th scope="col">Term</th>
+                                                    <th scope="col">Value</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    {% if related_queries %}
+                                                      {% for query in related_queries %}
+                                                      <tr>
+                                                          <th scope="row">{{ forloop.counter }}</th>
+                                                          <td>{{ query.0 }}</td>
+                                                          <td>{{ query.1 }}</td>
+                                                      </tr>
+                                                      {% endfor %}
+                                                    {% else %}
                                                     <tr>
-                                                        <th scope="row">1</th>
-                                                        <td>Mark</td>
-                                                        <td>Otto</td>
-                                                        <td>@mdo</td>
+                                                        <th scope="row"></th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">2</th>
-                                                        <td>Jacob</td>
-                                                        <td>Thornton</td>
-                                                        <td>@fat</td>
+                                                        <th scope="row"></th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
                                                     <tr>
-                                                        <th scope="row">3</th>
-                                                        <td>Harry</td>
-                                                        <td>Potter</td>
-                                                        <td>@hpt</td>
+                                                        <th scope="row"></th>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
                                                     </tr>
+                                                    {% endif %}
                                                 </tbody>
                                             </table>
                                         </div>
@@ -463,4 +531,8 @@
             </div>
         </section>
         <!-- End Work Detail -->
+
+        <script>
+          var chartData = {{ chart_data | safe }};
+        </script>
 {% endblock %}
