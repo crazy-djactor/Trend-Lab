@@ -97,24 +97,24 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <ul class="nav nav-pills nav-justified flex-column flex-sm-row rounded" id="pills-tab" role="tablist">
-                                    <li class="nav-item" onclick="toggleTimePeriod('5y')">
-                                        <a class="nav-link rounded active" id="pills-cloud-tab" data-toggle="pill" href="#pills-cloud" role="tab" aria-controls="pills-cloud" aria-selected="false">
+                                    <li class="nav-item" onclick="toggleTimePeriod('today 5-y')">
+                                        <a class="nav-link rounded {% if timespan == '' or timespan == 'today 5-y' %}active{% endif %}" id="pills-cloud-tab" data-toggle="pill" href="#pills-cloud" role="tab" aria-controls="pills-cloud" aria-selected="false">
                                             <div class="text-center pt-1 pb-1">
                                                 <h4 class="title font-weight-normal mb-0">5 Years</h4>
                                             </div>
                                         </a><!--end nav link-->
                                     </li><!--end nav item-->
 
-                                    <li class="nav-item" onclick="toggleTimePeriod('12m')">
-                                        <a class="nav-link rounded" id="pills-smart-tab" data-toggle="pill" href="#pills-smart" role="tab" aria-controls="pills-smart" aria-selected="false">
+                                    <li class="nav-item" onclick="toggleTimePeriod('{{year_filter}}')">
+                                        <a class="nav-link rounded {% if timespan == year_filter %}active{% endif %}"  id="pills-smart-tab" data-toggle="pill" href="#pills-smart" role="tab" aria-controls="pills-smart" aria-selected="false">
                                             <div class="text-center pt-1 pb-1">
                                                 <h4 class="title font-weight-normal mb-0">12 Months</h4>
                                             </div>
                                         </a><!--end nav link-->
                                     </li><!--end nav item-->
 
-                                    <li class="nav-item" onclick="toggleTimePeriod('30d')">
-                                        <a class="nav-link rounded" id="pills-apps-tab" data-toggle="pill" href="#pills-apps" role="tab" aria-controls="pills-apps" aria-selected="false">
+                                    <li class="nav-item" onclick="toggleTimePeriod('today 1-m')">
+                                        <a class="nav-link rounded {% if timespan == 'today 1-m' %}active{% endif %}" id="pills-apps-tab" data-toggle="pill" href="#pills-apps" role="tab" aria-controls="pills-apps" aria-selected="false">
                                             <div class="text-center pt-1 pb-1">
                                                 <h4 class="title font-weight-normal mb-0">30 Days</h4>
                                             </div>
@@ -127,20 +127,20 @@
                         <div class="row pt-2">
                             <div class="col-12">
                                 <div class="tab-content" id="pills-tabContent">
-                                    <div class="tab-pane fade show active" id="pills-cloud" role="tabpanel" aria-labelledby="pills-cloud-tab">
+                                    <div class="tab-pane fade {% if timespan == '' or timespan == 'today 5-y' %}show active{% endif %}" id="pills-cloud" role="tabpanel" aria-labelledby="pills-cloud-tab">
                                         <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
                                             <canvas id="5yearinterest"></canvas>
 
                                         </div>
                                     </div><!--end teb pane-->
 
-                                    <div class="tab-pane fade" id="pills-smart" role="tabpanel" aria-labelledby="pills-smart-tab">
+                                    <div class="tab-pane fade {% if timespan == year_filter %}show active{% endif %}" id="pills-smart" role="tabpanel" aria-labelledby="pills-smart-tab">
                                         <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
                                           <canvas id="12monthinterest"></canvas>
                                         </div>
                                     </div><!--end teb pane-->
 
-                                    <div class="tab-pane fade" id="pills-apps" role="tabpanel" aria-labelledby="pills-apps-tab">
+                                    <div class="tab-pane fade {% if timespan == 'today 1-m' %}show active{% endif %}" id="pills-apps" role="tabpanel" aria-labelledby="pills-apps-tab">
                                         <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
                                           <canvas id="30dayinterest"></canvas>
                                         </div>

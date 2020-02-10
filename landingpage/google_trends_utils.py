@@ -16,13 +16,16 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
     kw_list = [term]
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
     interest_dataframe = pytrends.interest_over_time()
-
-    interest_values = list(interest_dataframe[term])
-    date_values_d64 = list(interest_dataframe.index.values)
-    date_values = []
-    for date in date_values_d64:
-        date_values.append(np.datetime_as_string(date, unit='D'))
-
+    print(interest_dataframe)
+    try:
+        interest_values = list(interest_dataframe[term])
+        date_values_d64 = list(interest_dataframe.index.values)
+        date_values = []
+        for date in date_values_d64:
+            date_values.append(np.datetime_as_string(date, unit='D'))
+    except:
+        interest_values = []
+        date_values = []
 
     return_dict = {
         "interest_values": interest_values,
@@ -35,12 +38,20 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
 def get_related_queries(term, geo='GB', timeframe='today 5-y'):
 
     pytrends = TrendReq(hl='en-US', tz=0)
-
     kw_list = [term]
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
 
     related_queries = pytrends.related_queries()
-    related_queries = related_queries[term]['top'][:3].values.tolist()
+    try:
+        if 0 < len(related_queries[term]['top'].index) <= 3:
+            related_queries = related_queries[term]['top'].values.tolist()
+        elif len(related_queries[term]['top'].index) == 0:
+            related_queries = []
+        else:
+            related_queries = related_queries[term]['top'][:3].values.tolist()
+    except:
+        related_queries = []
+
     return related_queries
 
 

@@ -26,24 +26,29 @@ def detailpage(request, username, idtoken):
 	query_term = request.GET.get('q','')
 	location = request.GET.get('geo','')
 	original_term = request.GET.get('originalTerm', '')
+	timespan = request.GET.get('timeperiod','')
 	print(query_term, location, original_term)
 
-
+	#prep datetime strings for now and 1 year ago
+	stop = datetime.datetime.utcnow().strftime('%Y-%m-%d')
+	start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1*365)
+	start = start_obj.strftime('%Y-%m-%d')
+	year_filter = start + " " + stop
 	#get interest data
 	if query_term != '':
 		interest_data_5y = fetch_interest_over_time(query_term,geo=location, timeframe='today 5-y')
-		#prep datetime strings for now and 1 year ago
-		stop = datetime.datetime.utcnow().strftime('%Y-%m-%d')
-		start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1*365)
-		start = start_obj.strftime('%Y-%m-%d')
-		year_filter = start + " " + stop
+
 		interest_data_12m = fetch_interest_over_time(query_term,geo=location, timeframe=year_filter)
 		interest_data_1m = fetch_interest_over_time(query_term,geo=location, timeframe='today 1-m')
 
 		#getting related queries
-		related_queries = get_related_queries(query_term, geo=location)
-		related_topics = get_related_topics(query_term, geo=location)
-		region_interest = get_interest_by_region(query_term, geo=location)
+		#if timespan is not defined default to 5 years
+		if timespan == '' or timespan == ' ':
+			timespan = "today 5-y"
+			
+		related_queries = get_related_queries(query_term, geo=location, timeframe=timespan)
+		related_topics = get_related_topics(query_term, geo=location,timeframe=timespan)
+		region_interest = get_interest_by_region(query_term, geo=location, timeframe=timespan)
 		wikipedia_summary = get_wikipedia_summary(original_term)
 		top_news = get_top_news(original_term)
 	else:
@@ -67,7 +72,9 @@ def detailpage(request, username, idtoken):
 		"region_interest": region_interest,
 		"top_news": top_news,
 		"countries": pycountry.countries,
-		"current_country": location
+		"current_country": location,
+		"year_filter": year_filter,
+		"timespan": timespan
 	}
 	return render(request, 'detailpage.html', context)
 

@@ -95,7 +95,23 @@ function switchTrendLocale(newLocale){
 
 //function to toggle the time periods btn 5 yrs, 1 year and 30 days
 function toggleTimePeriod(option){
-
+  let url = window.location.href
+  let urlParamStrings = url.split("?")
+  if (urlParamStrings.length > 2){
+    //join them
+    var urlParamString = urlParamStrings.slice(1,).join("");
+  }else{
+    var urlParamString = urlParamStrings[1];
+  }
+  searchParams = new URLSearchParams(urlParamString);
+  if (searchParams.has("timeperiod")){
+    searchParams.set("timeperiod",option);
+  }else{
+    searchParams.append("timeperiod", option);
+  }
+  new_params = searchParams.toString();
+  new_url = urlParamStrings[0] + "?" +new_params;
+  window.location.href = new_url;
 }
 
 function updateSuggestionDiv(suggestions){
