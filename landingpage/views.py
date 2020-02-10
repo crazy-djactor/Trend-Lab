@@ -45,15 +45,31 @@ def detailpage(request, username, idtoken):
 		#if timespan is not defined default to 5 years
 		if timespan == '' or timespan == ' ':
 			timespan = "today 5-y"
-			
+
 		related_queries = get_related_queries(query_term, geo=location, timeframe=timespan)
 		related_topics = get_related_topics(query_term, geo=location,timeframe=timespan)
 		region_interest = get_interest_by_region(query_term, geo=location, timeframe=timespan)
 		wikipedia_summary = get_wikipedia_summary(original_term)
 		top_news = get_top_news(original_term)
 	else:
-		interest_data_5y, interest_data_1m, interest_data_12m = None, None, None
-		related_queries, related_topics, wikipedia_summary, region_interest, top_news = None, None, None, None, None
+		query_term_default = "iron man"
+		interest_data_5y = fetch_interest_over_time(query_term_default)
+
+		interest_data_12m = fetch_interest_over_time(query_term_default,timeframe=year_filter)
+		interest_data_1m = fetch_interest_over_time(query_term_default,timeframe='today 1-m')
+
+		#getting related queries
+		#if timespan is not defined default to 5 years
+		if timespan == '' or timespan == ' ':
+			timespan = "today 5-y"
+
+		related_queries = get_related_queries(query_term_default, timeframe=timespan)
+		related_topics = get_related_topics(query_term_default,timeframe=timespan)
+		region_interest = get_interest_by_region(query_term_default, timeframe=timespan)
+		wikipedia_summary = get_wikipedia_summary(query_term_default)
+		top_news = get_top_news(query_term_default)
+		# interest_data_5y, interest_data_1m, interest_data_12m = None, None, None
+		# related_queries, related_topics, wikipedia_summary, region_interest, top_news = None, None, None, None, None
 
 
 
