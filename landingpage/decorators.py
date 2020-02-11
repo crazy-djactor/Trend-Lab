@@ -92,9 +92,10 @@ def is_token_valid(token):
         print('Tokens expired.')
         return False, None
 
-    #verify audience
-    if claims['aud'] != app_client_id:
-        print('Token was not issued for this audience')
-        return False, None
+    #verify audience for access tokens exclusively
+    print(claims)
+    # if claims['aud'] != app_client_id:
+    #     print('Token was not issued for this audience')
+    #     return False, None
 
     return True, claims

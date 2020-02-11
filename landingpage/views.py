@@ -62,6 +62,14 @@ def search_results(request, username, idtoken):
 		"interest_data_12m": interest_data_12m,
 		"interest_data_1m": interest_data_1m
 	})
+	#loading current country name in server  - easier that way
+	cur_country_name = pycountry.countries.get(alpha_2=location)
+	if cur_country_name == None:
+		cur_country_name = 'Worldwide'
+	else:
+		print(cur_country_name)
+		cur_country_name = cur_country_name.name
+
 	context = {
 		"username": username,
 		"chart_data":chart_data_dump,
@@ -73,6 +81,7 @@ def search_results(request, username, idtoken):
 		"top_news": top_news,
 		"countries": pycountry.countries,
 		"current_country": location,
+		"current_country_name": cur_country_name,
 		"year_filter": year_filter,
 		"timespan": timespan
 	}
@@ -118,5 +127,9 @@ def login(request):
 def recoverypassword(request):
 	return render(request, 'recovery-password.html')
 
-def settings(request):
-	return render(request, 'settings.html')
+@login_required
+def settings(request, username, idtoken):
+	context = {
+		"username": username
+	}
+	return render(request, 'settings.html', context)

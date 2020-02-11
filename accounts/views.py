@@ -88,7 +88,7 @@ def login(request):
 			else:
 				json_web_token = resp['AuthenticationResult']['IdToken']
 				#set this in cookie
-				resp = redirect('/search')
+				resp = redirect('/')
 				resp.set_cookie('IdToken', json_web_token)
 				return resp
 

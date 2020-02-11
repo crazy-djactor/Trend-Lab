@@ -52,12 +52,12 @@ function fetchGoogleTrendsSuggestion(searchTerm){
     data : JSON.stringify(payload),
     contentType:'application/json',
     success : function(data) {
-        updateSuggestionDiv(data['default'][['topics']]);
+        updateSuggestionDiv(data['default'][['topics']], searchTerm);
     },
     error : function(request,error)
     {
         console.log(error)
-        updateSuggestionDiv([]);
+        updateSuggestionDiv([], searchTerm);
     }
   });
 
@@ -114,13 +114,22 @@ function toggleTimePeriod(option){
   window.location.href = new_url;
 }
 
-function updateSuggestionDiv(suggestions){
+function updateSuggestionDiv(suggestions, searchTerm){
   //with search terms, dom manipulation to insert suggestions with links.
   //if empty, hide parent div too
   $('#autocomplete-parent-div').empty();
   if (suggestions.length == 0){
     $('#autocomplete-parent-div').hide();
   }else{
+    //first append the search term itself
+    let childDiv = `
+    <div class="autocomplete-element" onclick="submitWithSuggestion('`+ searchTerm +`','` + searchTerm +`')">
+      <span class="autocomplete-term">`
+      + searchTerm + `</span><br/>
+      <span class="autocomplete-term-topic">Search term</span>
+    </div>
+    `
+    $('#autocomplete-parent-div').append(childDiv);
     suggestions.forEach(function(suggestion){
       let childDiv = `
       <div class="autocomplete-element" onclick="submitWithSuggestion('`+ suggestion['mid'] +`','` + suggestion['title'] +`')">
