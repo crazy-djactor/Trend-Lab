@@ -82,4 +82,7 @@ def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="CO
         result.append([region_names[i], region_score[i]])
 
     result = sorted(result,key=lambda l:l[0], reverse=True)
-    return result[:4]
+    if len(result) >= 7:
+        return result[:6]
+    else:
+        return result
