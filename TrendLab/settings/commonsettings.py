@@ -27,8 +27,9 @@ SECRET_KEY = '^cz6=(%)1-&5y%vsep#sw5d_recf76%y9)%#xi!*l8in3=jv@a'
 # SECURITY WARNING: don't run with debug turned on in production!
 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+DEBUG= True
 
 # Application definition
 
@@ -94,6 +95,13 @@ WSGI_APPLICATION = 'TrendLab.wsgi.application'
 #         "PORT": "",
 #     }
 # }
+#placeholder db 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 
 # Password validation

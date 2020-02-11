@@ -18,7 +18,7 @@ lxml==4.5.0
 numpy==1.18.1
 pandas==1.0.1
 pathspec==0.5.9
-psycopg2==2.8.4
+psycopg2-binary==2.8.4
 pyasn1==0.4.8
 pycountry==19.8.18
 pypiwin32==223
