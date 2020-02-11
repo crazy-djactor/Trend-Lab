@@ -18,7 +18,7 @@ from . import views
 
 urlpatterns = [
 	path('', views.index, name='index'),
-    path('detailpage/', views.detailpage, name='detailpage'),
+    path('search/', views.search_results, name='search'),
     path('privacy/', views.privacy, name='privacy'),
     path('terms-and-conditions/', views.termsandconditions, name='termsandcondition'),
     path('settings/', views.settings, name='settings'),

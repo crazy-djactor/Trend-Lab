@@ -21,7 +21,7 @@ def index(request, username, idtoken):
 	return render(request, 'landingpage.html', context)
 
 @login_required
-def detailpage(request, username, idtoken):
+def search_results(request, username, idtoken):
 
 	query_term = request.GET.get('q','')
 	location = request.GET.get('geo','')
@@ -76,7 +76,7 @@ def detailpage(request, username, idtoken):
 		"year_filter": year_filter,
 		"timespan": timespan
 	}
-	return render(request, 'detailpage.html', context)
+	return render(request, 'search_results.html', context)
 
 @csrf_exempt
 def search_autocomplete(request):

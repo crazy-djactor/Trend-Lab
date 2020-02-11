@@ -88,7 +88,7 @@ def login(request):
 			else:
 				json_web_token = resp['AuthenticationResult']['IdToken']
 				#set this in cookie
-				resp = redirect('/detailpage')
+				resp = redirect('/search')
 				resp.set_cookie('IdToken', json_web_token)
 				return resp
 
@@ -105,12 +105,12 @@ def login(request):
 
 #oauth callback for google
 def google_oauth_callback(request):
-	
+
 	return render(request, 'google-callback-temp.html')
 @login_required
 def logout(request, username, idtoken):
 	#status = logout_user(username, idtoken)
 	#remove cookie
-	resp = redirect('/detailpage')
+	resp = redirect('/')
 	resp.set_cookie('IdToken', '')
 	return resp

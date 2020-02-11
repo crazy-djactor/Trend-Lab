@@ -136,13 +136,13 @@ function updateSuggestionDiv(suggestions){
 }
 
 function submitWithSuggestion(queryTerm, originalTerm){
-  //url params used to redirect to detail page
+  //url params used to redirect to search page
   if (geo == ' '){
-    let url = document.location.origin + "/detailpage?q=" + encodeURIComponent(queryTerm) + "&originalTerm=" + originalTerm ;
+    let url = document.location.origin + "/search?q=" + encodeURIComponent(queryTerm) + "&originalTerm=" + originalTerm ;
     //redirect to that page
     window.location.href = url;
   }else{
-    let url = document.location.origin + "/detailpage?q=" + encodeURIComponent(queryTerm) + "&geo="+ geo + "&originalTerm=" + originalTerm ;
+    let url = document.location.origin + "/search?q=" + encodeURIComponent(queryTerm) + "&geo="+ geo + "&originalTerm=" + originalTerm ;
     //redirect to that page
     window.location.href = url;
   }
@@ -159,7 +159,7 @@ $('#search-form').on('submit',function(e){
 })
 
 
-//handling results in detailpage below
+//handling results in searchpage below
 
 //chart 1 for interest over time
 function plotInterestChart1(){
