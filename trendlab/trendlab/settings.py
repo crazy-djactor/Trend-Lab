@@ -54,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'TrendLab.urls'
+ROOT_URLCONF = 'trendlab.urls'
 
 TEMPLATES = [
     {
@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'TrendLab.wsgi.application'
+WSGI_APPLICATION = 'trendlab.wsgi.application'
 
 
 # Database
@@ -96,10 +96,21 @@ WSGI_APPLICATION = 'TrendLab.wsgi.application'
 #     }
 # }
 #placeholder db
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+#dev db on aws RDS
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('AWS_DB_NAME'),
+        'USER': os.getenv('AWS_DB_USERNAME'),
+        'PASSWORD':os.getenv('AWS_DB_PASSWORD'),
+        'HOST':os.getenv('AWS_DB_HOST'),
+        'PORT':os.getenv('AWS_DB_PORT'),
     }
 }
 
@@ -141,3 +152,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "www", "static")
