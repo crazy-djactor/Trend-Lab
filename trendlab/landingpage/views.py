@@ -70,6 +70,8 @@ def search_results(request, username, idtoken):
 		print(cur_country_name)
 		cur_country_name = cur_country_name.name
 
+	print(type(related_queries), related_queries)
+	print(type(related_topics), related_topics)
 	context = {
 		"username": username,
 		"chart_data":chart_data_dump,
@@ -111,6 +113,14 @@ def search_autocomplete(request):
 		#return error
 		raise SuspiciousOperation("Invalid request; incorrect parameters/headers supplied")
 
+@csrf_exempt
+def load_wikipedia_summary(request):
+	json_data = json.loads(request.body)
+	summary = get_wikipedia_summary(json_data['term'])
+	resp_dict = {
+		"summary": summary
+	}
+	return JsonResponse(resp_dict)
 
 def privacy(request):
 	return render(request, 'privacy.html')
@@ -132,4 +142,5 @@ def settings(request, username, idtoken):
 	context = {
 		"username": username
 	}
+
 	return render(request, 'settings.html', context)

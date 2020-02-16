@@ -7,7 +7,7 @@ def get_top_news(term, limit=3):
     googlenews.search(term)
     result = googlenews.result()
     try:
-        result = result[0:limit]
+        result = result
     except:
         pass
 

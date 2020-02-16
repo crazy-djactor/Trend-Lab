@@ -23,7 +23,7 @@ urlpatterns = [
     path('terms-and-conditions/', views.termsandconditions, name='termsandcondition'),
     path('settings/', views.settings, name='settings'),
     path('search/autocomplete/', views.search_autocomplete, name='autocomplete'),
-
+    path('get-wiki-summary', views.load_wikipedia_summary, name='load_wiki_summary')
 
 ]
 #

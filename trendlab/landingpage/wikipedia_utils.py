@@ -6,13 +6,13 @@ def get_wikipedia_summary(term,char_limit=280):
     except wikipedia.DisambiguationError as e:
         print(e.options)
         count = 0
-        return_string = "<ul>"
+        return_string = "<ul id='disambig-items'>"
         for option in e.options:
-            if count > 4:
+            if count > 15:
                 break
             page = wikipedia.page(option)
             try:
-                return_string += ("<li><a href=" + page.url +">" + page.title + "</a></li>")
+                return_string += ("<li onclick='showItemSummary(this)'><a>" + page.title + "</a></li>")
                 count += 1
             except:
                 pass

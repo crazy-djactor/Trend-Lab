@@ -1,13 +1,23 @@
 <script>
 //get idtoken from url
-const urlParams = window.location.href;
-console.log(urlParams);
-localStorage.setItem('uriT', urlParams);
-const token = urlParams.split('#')[1].split('=')[1].split('&')[0];
-console.log(token);
-//set the cookie
-document.cookie = "IdToken=" + token + ";path=/";
-//redirect to detailpage
-window.location = '/';
+let hash_values = window.location.hash;
+let value_list = hash_values.slice(1,).split('&');
+for (v of value_list){
+  if (v.startsWith('id_token')){
+    let token = v.split('=')[1];
+    document.cookie = "IdToken=" + token + ";path=/";
+  }
+}
+
+//check any next params and redirect accordingly
+const queryString = window.opener.location.search;
+if (queryString != '' && queryString.startsWith('?next=')){
+  next_url = queryString.slice(6,);
+  window.opener.location.href = next_url;
+}else{
+  window.opener.location.href = '/';
+}
+
+window.close();
 
 </script>

@@ -77,8 +77,17 @@ def reset_pass(request):
 	return render(request, 'reset-pass.html', context)
 
 def login(request):
+	request_path = request.build_absolute_uri()
+	request_host = request.get_host()
+	if request.is_secure:
+		skip_length = 14 + len(request_host)
+		request_path = request_path[skip_length:]
+	else:
+		skip_length = 13 + len(request_host)
+		request_path = request_path[skip_length:]
 	if request.method == "POST":
 		form = LoginForm(request.POST)
+		next = request.POST.get('next','')
 		if form.is_valid():
 			resp, msg = initiate_auth(form.cleaned_data.get('email'),form.cleaned_data.get('password'))
 			#check for errors, if not log in user by saving their token
@@ -88,7 +97,10 @@ def login(request):
 			else:
 				json_web_token = resp['AuthenticationResult']['IdToken']
 				#set this in cookie
-				resp = redirect('/')
+				if request_path != '':
+					resp = redirect(request_path[6:])
+				else:
+					resp = redirect('/')
 				resp.set_cookie('IdToken', json_web_token)
 				return resp
 
@@ -96,8 +108,10 @@ def login(request):
 	else:
 		form = LoginForm()
 
+
 	context = {
-		"form":form
+		"form":form,
+		"next_page": request_path
 	}
 
 	return render(request, 'login.html', context)

@@ -1,7 +1,7 @@
 from pytrends.request import TrendReq
 import pandas as pd
 import numpy as np
-
+import json 
 
 
 def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
@@ -41,17 +41,18 @@ def get_related_queries(term, geo='GB', timeframe='today 5-y'):
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
 
     related_queries = pytrends.related_queries()
+    #print(related_queries)
     try:
         if 0 < len(related_queries[term]['top'].index) <= 3:
             related_queries = related_queries[term]['top'].values.tolist()
         elif len(related_queries[term]['top'].index) == 0:
             related_queries = []
         else:
-            related_queries = related_queries[term]['top'][:3].values.tolist()
+            related_queries = related_queries[term]['top'].values.tolist()
     except:
         related_queries = []
 
-    return related_queries
+    return json.dumps(related_queries)
 
 
 def get_related_topics(term, geo='GB', timeframe='today 5-y'):
@@ -62,8 +63,9 @@ def get_related_topics(term, geo='GB', timeframe='today 5-y'):
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
 
     related_topics = pytrends.related_topics()
-    related_topics = related_topics[term]['top'][:3].values.tolist()
-    return related_topics
+    related_topics = related_topics[term]['top'].values.tolist()
+    #print(len(related_topics), related_topics)
+    return json.dumps(related_topics)
 
 
 def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="COUNTRY"):
@@ -77,6 +79,7 @@ def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="CO
     top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=True, inc_geo_code=False)
     region_names = list(top_regions[term])
     region_score = list(top_regions.index.values)
+    #print("Debug region stuff: ", region_names, region_score)
     result = []
     for i in range(len(region_names)):
         result.append([region_names[i], region_score[i]])

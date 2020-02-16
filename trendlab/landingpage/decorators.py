@@ -24,18 +24,29 @@ def login_required(f):
     """
     def wrapper(request, *args, **kwargs):
         #decode jwt token
+        request_path = request.build_absolute_uri()
+        request_host = request.get_host()
+        if request.is_secure:
+            skip_length = 7 + len(request_host)
+            request_path = request_path[skip_length:]
+        else:
+            skip_length = 6 + len(request_host)
+            request_path = request_path[skip_length:]
         try:
             token = request.COOKIES['IdToken']
             if token == '':
-                return redirect('/login')
+                redirect_path = "/login/?next=" + request_path
+                return redirect(redirect_path)
         except:
-            return redirect('/login')
+            redirect_path = "/login/?next=" + request_path
+            return redirect(redirect_path)
 
         status, claims = is_token_valid(token)
         if status:
             return f(request,claims['email'], idtoken=token, *args, **kwargs)
         else:
-            return redirect('/login')
+            redirect_path = "/login/?next=" + request_path
+            return redirect(redirect_path)
 
     return wrapper
 

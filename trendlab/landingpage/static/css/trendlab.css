@@ -7,7 +7,7 @@
   box-shadow: 0 0 3px rgba(0,0,0,0.15) !important;
   display:none;
   position:absolute;
-  z-index:9999;
+  z-index:1009;
   background:#fff;
   width:100%;
 }
@@ -29,5 +29,24 @@
 }
 #trend-search-input{
   position: relative;
-  z-index: 99999;
+  z-index: 1020;
+}
+.search-text-btn{
+  z-index: 1025;
+}
+.z-index-l3{
+  z-index:1031 !important;
+}
+
+#news-items-nav span {
+  cursor:pointer;
+}
+#top-regions-nav span {
+  cursor:pointer;
+}
+#related-queries-nav span {
+  cursor:pointer;
+}
+#related-topic-nav span {
+  cursor:pointer;
 }
