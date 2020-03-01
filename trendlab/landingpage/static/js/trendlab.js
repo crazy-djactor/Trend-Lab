@@ -181,6 +181,7 @@ function plotInterestChart1(){
       datasets: [{
         data: chartData['interest_data_5y']['interest_values'],
         fill: false,
+        backgroundColor: "#2f55d4",
         pointBackgroundColor: "#fff",
         pointBorderColor: "#fff",
         pointRadius:0,
@@ -191,15 +192,22 @@ function plotInterestChart1(){
            legend: {
               display: false
            },
+           tooltips: {
+                enabled: false
+           },
            responsive: true,
            maintainAspectRatio: false,
            scales: {
             yAxes: [{
+              gridLines: {
+                  drawBorder: false,
+              },
               ticks: {
-                beginAtZero: true,
-                min: 0,
-                max: 100,
-                stepSize: 25,
+                display: false,
+                // beginAtZero: true,
+                // min: 0,
+                // max: 100,
+                // stepSize: 25,
               }
             }],
             xAxes:[{
@@ -240,15 +248,22 @@ function plotInterestChart2(){
            legend: {
               display: false
            },
+           tooltips: {
+                enabled: false
+           },
            responsive: true,
            maintainAspectRatio: false,
            scales: {
             yAxes: [{
+              gridLines: {
+                  drawBorder: false,
+              },
               ticks: {
-                beginAtZero: true,
-                min: 0,
-                max: 100,
-                stepSize: 25,
+                display: false,
+                // beginAtZero: true,
+                // min: 0,
+                // max: 100,
+                // stepSize: 25,
               }
             }],
             xAxes:[{
@@ -289,15 +304,22 @@ function plotInterestChart3(){
            legend: {
               display: false
            },
+           tooltips: {
+                enabled: false
+           },
            responsive: true,
            maintainAspectRatio: false,
            scales: {
             yAxes: [{
+              gridLines: {
+                  drawBorder: false,
+              },
               ticks: {
-                beginAtZero: true,
-                min: 0,
-                max: 100,
-                stepSize: 25,
+                display: false,
+                // beginAtZero: true,
+                // min: 0,
+                // max: 100,
+                // stepSize: 25,
               }
             }],
             xAxes:[{

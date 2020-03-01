@@ -1,7 +1,8 @@
 from pytrends.request import TrendReq
 import pandas as pd
 import numpy as np
-import json 
+from scipy import signal
+import json
 
 
 def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
@@ -16,6 +17,7 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
     kw_list = [term]
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
     interest_dataframe = pytrends.interest_over_time()
+
     try:
         interest_values = list(interest_dataframe[term])
         date_values_d64 = list(interest_dataframe.index.values)
@@ -30,7 +32,6 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
         "interest_values": interest_values,
         "date_values": date_values,
     }
-
     return return_dict
 
 

@@ -56,14 +56,19 @@
         <section class="section pt-0">
             <div class="container">
                 <div class="row pt-5">
-                    <h4 class="col-6 title"> {{ search_term_name }} </h4>
+                    <h4 class="col-6 title"> {{ search_term_name }} <button href="#" class="btn btn-outline-primary btn-sm ml-2"> Follow </button></h4>
                     <div class="col-6">
                         <button class="btn btn-outline-primary float-right" onclick="window.print()">Download PDF</button>
                     </div>
-                    <ul class="col-6 list-unstyled mt-4">
-                        <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Monthly Search Volume :</span> 120K</li>
-                        <li class="list-inline-item h6 date text-muted"> <span class="text-dark">Date :</span> 23th Sep, 2020</li>
-                    </ul>
+                    <div class="col-6">
+                        <ul class="list-unstyled mt-2">
+                            <li class="list-inline-item h6 user text-muted mr-2"> <span class="badge badge-success btn-sm"> Exploding </span></li>
+                            <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Monthly Search Volume :</span> 120K</li>
+                            <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Gradient :</span> 7.3  <span class="text-dark"> Exponent :</span> 1.5</li>
+                            <li class="list-inline-item h6 date text-muted"> <span class="text-dark">Date :</span> 23th Sep, 2020</li>
+                        </ul>
+                    </div>
+
                     <div class="col-6 dropdown mt-2">
                         <button class="btn btn-outline-light dropdown-toggle float-right" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           {% if current_country %}
@@ -140,11 +145,6 @@
 
                         <div class="row pt-2">
                             <div class="col-12">
-                                <ul class="col-6 list-unstyled mt-4">
-                                    <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Trend Type :</span> Exploding</li>
-                                    <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Gradient :</span> 7.3</li>
-                                    <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Exponent :</span> 1.5</li>
-                                </ul>
                                 <div class="tab-content" id="pills-tabContent">
                                     <div class="tab-pane fade {% if timespan == '' or timespan == 'today 5-y' %}show active{% endif %}" id="pills-cloud" role="tabpanel" aria-labelledby="pills-cloud-tab">
                                         <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
