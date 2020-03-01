@@ -58,7 +58,7 @@
                 <div class="row pt-5">
                     <h4 class="col-6 title"> {{ search_term_name }} </h4>
                     <div class="col-6">
-                        <a href="#" class="btn btn-outline-primary float-right"> Download PDF </a>
+                        <button class="btn btn-outline-primary float-right" onclick="window.print()">Download PDF</button>
                     </div>
                     <ul class="col-6 list-unstyled mt-4">
                         <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Monthly Search Volume :</span> 120K</li>
@@ -86,8 +86,7 @@
                             <a class="dropdown-item" href="#" onclick="switchTrendLocale('{{country.alpha_2}}')">{{country.name}}</a>
                           {% endfor %}
                           {% else %}
-                          <a class="dropdown-item" href="#" onclick="switchTrendLocale('US')">United States</a>
-                          <a class="dropdown-item" href="#" onclick="switchTrendLocale('GB')">United Kingdom</a>
+                          <a class="dropdown-item" href="#" onclick="switchTrendLocale('')">Worldwide</a>
                           {% endif %}
                         </div>
                     </div>
@@ -98,8 +97,8 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <ul class="nav nav-pills nav-justified flex-column flex-sm-row rounded" id="pills-tab" role="tablist">
-                                    <li class="nav-item" onclick="toggleTimePeriod('today 5-y')">
-                                        <a class="nav-link rounded {% if timespan == '' or timespan == 'today 5-y' %}active{% endif %}" id="pills-cloud-tab" data-toggle="pill" href="#pills-cloud" role="tab" aria-controls="pills-cloud" aria-selected="false">
+                                    <li class="nav-item" onclick="toggleTimePeriod('all)">
+                                        <a class="nav-link rounded {% if timespan == '' or timespan == 'all' %}active{% endif %}" id="pills-cloud-tab" data-toggle="pill" href="#pills-cloud" role="tab" aria-controls="pills-cloud" aria-selected="false">
                                             <div class="text-center pt-1 pb-1">
                                                 <h4 class="title font-weight-normal mb-0">Lifetime</h4>
                                             </div>
@@ -128,8 +127,8 @@
                                             </div>
                                         </a><!--end nav link-->
                                     </li><!--end nav item-->
-                                    <li class="nav-item" onclick="toggleTimePeriod('today 5-y')">
-                                        <a class="nav-link rounded {% if timespan == '' or timespan == 'today 5-y' %}active{% endif %}" id="pills-cloud-tab" data-toggle="pill" href="#pills-cloud" role="tab" aria-controls="pills-cloud" aria-selected="false">
+                                    <li class="nav-item" onclick="toggleTimePeriod('today 7-d')">
+                                        <a class="nav-link rounded {% if timespan == '' or timespan == 'today 7-d' %}active{% endif %}" id="pills-cloud-tab" data-toggle="pill" href="#pills-cloud" role="tab" aria-controls="pills-cloud" aria-selected="false">
                                             <div class="text-center pt-1 pb-1">
                                                 <h4 class="title font-weight-normal mb-0">Last Week</h4>
                                             </div>
@@ -141,6 +140,11 @@
 
                         <div class="row pt-2">
                             <div class="col-12">
+                                <ul class="col-6 list-unstyled mt-4">
+                                    <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Trend Type :</span> Exploding</li>
+                                    <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Gradient :</span> 7.3</li>
+                                    <li class="list-inline-item h6 user text-muted mr-2"> <span class="text-dark">Exponent :</span> 1.5</li>
+                                </ul>
                                 <div class="tab-content" id="pills-tabContent">
                                     <div class="tab-pane fade {% if timespan == '' or timespan == 'today 5-y' %}show active{% endif %}" id="pills-cloud" role="tabpanel" aria-labelledby="pills-cloud-tab">
                                         <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
@@ -285,7 +289,7 @@
                             <div class="col mt-4 pt-2">
                                 <div class="component-wrapper rounded shadow">
                                     <div class="pr-4 pl-4 pt-4 pb-0">
-                                        <h4 class="title mb-0">Top Social Media Influencers</h4>
+                                        <h4 class="title mb-0">Top Instagram Influencers</h4>
                                     </div>
                                     <div class="p-4">
                                         <div class="table-responsive bg-white">
@@ -307,14 +311,14 @@
                                                 <tbody>
                                                     <tr>
                                                         <th scope="row">1</th>
-                                                        <td>img</td>
-                                                        <td>@caloriefixes</td>
+                                                        <td><img src="https://instagram.flhr6-1.fna.fbcdn.net/v/t51.2885-19/s320x320/25015714_158561678243878_1583054580856389632_n.jpg?_nc_ht=instagram.flhr6-1.fna.fbcdn.net&_nc_ohc=gQ-XH0pPL60AX-M8DNg&oh=9d26240482a73504974281ad75688aa8&oe=5E99BAEC" class="img-fluid avatar avatar-ex-sm rounded-pill" alt=""></td>
+                                                        <td><a href="https://www.instagram.com/caloriefixes/">@caloriefixes</a></td>
                                                         <td>2,206.53K</td>
                                                         <td>1,612.09K</td>
                                                         <td>1.14%</td>
                                                         <td>Very Good</td>
                                                         <td>Food</td>
-                                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2">download report</a></td>
+                                                        <td><a href=" https://hypeauditor.com/preview/caloriefixes/?source=test" target="_blank" class="btn btn-primary btn-sm mr-2">🔥 Download report</a></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">2</th>
@@ -325,7 +329,7 @@
                                                         <td>1.14%</td>
                                                         <td>Very Good</td>
                                                         <td>Food</td>
-                                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2">download report</a></td>
+                                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2">🔥 Download report</a></td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">3</th>
@@ -336,7 +340,7 @@
                                                         <td>1.14%</td>
                                                         <td>Very Good</td>
                                                         <td>Food</td>
-                                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2">download report</a></td>
+                                                        <td><a href="javascript:void(0)" class="btn btn-primary btn-sm mr-2">🔥 Download report</a></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -443,7 +447,6 @@
           var chartData = {{ chart_data | safe }};
           var newsStore = {{ top_news | safe }};
           var regionInterest = {{ region_interest | safe}};
-
         </script>
 
 {% endblock %}
