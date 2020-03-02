@@ -67,11 +67,11 @@ def search_results(request, username, idtoken):
 	if cur_country_name == None:
 		cur_country_name = 'Worldwide'
 	else:
-		print(cur_country_name)
+		# print(cur_country_name)
 		cur_country_name = cur_country_name.name
 
-	print(type(related_queries), related_queries)
-	print(type(related_topics), related_topics)
+	# print(type(related_queries), related_queries)
+	# print(type(related_topics), related_topics)
 	context = {
 		"username": username,
 		"chart_data":chart_data_dump,
