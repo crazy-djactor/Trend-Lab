@@ -34,8 +34,6 @@ def signup(request):
 	return render(request, 'signup.html', context)
 
 def confirm_email_notification(request):
-
-
 	return render(request, 'conf-email.html')
 
 def recoverypassword(request):
@@ -119,8 +117,8 @@ def login(request):
 
 #oauth callback for google
 def google_oauth_callback(request):
-
 	return render(request, 'google-callback-temp.html')
+
 @login_required
 def logout(request, username, idtoken):
 	#status = logout_user(username, idtoken)

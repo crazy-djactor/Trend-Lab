@@ -45,12 +45,34 @@ def sign_up(username, password, firstname, lastname):
             ]
             )
     except client.exceptions.UsernameExistsException as e:
-        print(e)
-        return None
+        return {"error": False,
+                "success": True,
+                "message": "This username already exists",
+                "data": None}
+    except client.exceptions.InvalidPasswordException as e:
+
+        return {"error": False,
+                "success": True,
+                "message": "Password should have Caps,\
+                                  Special chars, Numbers",
+                "data": None}
+    except client.exceptions.UserLambdaValidationException as e:
+        return {"error": False,
+                "success": True,
+                "message": "Email already exists",
+                "data": None}
+
     except Exception as e:
-        print(e)
-        return None
+        return {"error": False,
+                "success": True,
+                "message": str(e),
+                "data": None}
     return resp
+    # return {"error": False,
+    #         "success": True,
+    #         "message": "Please confirm your signup, \
+    #                             check Email for validation code",
+    #         "data": None}
 
 def initiate_auth(username, password):
     try:
@@ -172,7 +194,6 @@ def lambda_handler(event, context):
     if action == 'signup':
         firstname = body['firstname']
         lastname = body['lastname']
-
 
 
         signed_up = sign_up(username, password, firstname, lastname)

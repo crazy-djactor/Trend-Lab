@@ -78,12 +78,12 @@ WSGI_APPLICATION = 'trendlab.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
 
 # DATABASES = {
 #     "default": {
@@ -102,17 +102,17 @@ WSGI_APPLICATION = 'trendlab.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
-#dev db on aws RDS
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('AWS_DB_NAME'),
-        'USER': os.getenv('AWS_DB_USERNAME'),
-        'PASSWORD':os.getenv('AWS_DB_PASSWORD'),
-        'HOST':os.getenv('AWS_DB_HOST'),
-        'PORT':os.getenv('AWS_DB_PORT'),
-    }
-}
+# dev db on aws RDS
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('AWS_DB_NAME'),
+#         'USER': os.getenv('AWS_DB_USERNAME'),
+#         'PASSWORD':os.getenv('AWS_DB_PASSWORD'),
+#         'HOST':os.getenv('AWS_DB_HOST'),
+#         'PORT':os.getenv('AWS_DB_PORT'),
+#     }
+# }
 
 
 # Password validation

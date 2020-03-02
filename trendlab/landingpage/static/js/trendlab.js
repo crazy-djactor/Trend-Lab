@@ -320,7 +320,9 @@ plotInterestChart3();
 
 //login popup
 function launchGoogleSigninPopup(){
-  url = "https://trend-lab.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=6cb6cboefcl1a2santkqo042tk&redirect_uri="+ document.location.origin +"/google-login-oauth-callback";
+
+  // url = "https://trend-lab.auth.us-east-1.amazoncognito.com/login?client_id=6cb6cboefcl1a2santkqo042tk&response_type=token&scope=email+openid+profile&redirect_uri="+ document.location.origin +"/google-login-oauth-callback";
+  url = "https://trend-lab.auth.us-east-1.amazoncognito.com/login?client_id=6cb6cboefcl1a2santkqo042tk&response_type=token&scope=email+openid+profile&redirect_uri="+ document.location.origin +"/google-login-oauth-callback";
   //dimension getting to center the popup
   x = window.innerWidth || document.documentElement.clientWidth;
   y = window.innerHeight|| documentElememt.clientHeight;
