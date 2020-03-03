@@ -42,6 +42,7 @@ def get_related_queries(term, geo='GB', timeframe='today 5-y'):
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
 
     related_queries = pytrends.related_queries()
+
     #print(related_queries)
     try:
         if 0 < len(related_queries[term]['top'].index) <= 3:

@@ -13,6 +13,20 @@
 {% endblock %}
 
 {% block settings %}
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script>
+        $(document).ready(function()
+        {
+            var id_list = {{ interest_list| safe }}
+            $("#All_cat").change(function(){
+               if($("#All_cat").is(":checked")){
+                   for (let i = 0; i < id_list.length; i ++)
+                       $("#"+id_list[i]["id"]).prop("checked", true);
+               }
+            });
+        });
+    </script>
+
     <!-- Profile Setting Start -->
     <section class="section">
         <div class="container">
@@ -57,306 +71,319 @@
                                         <h5 class="text-md-left text-center">Interests :</h5>
                                         <form>
                                             <div class="row mt-4">
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">All Categories</label>
+                                                {% for interest in interest_list %}
+                                                    <div class="col-md-2">
+                                                        <div class="form-check form-check-inline">
+                                                            <div class="form-group">
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" id="{{ interest.id }}">
+                                                                    <label class="custom-control-label" for="{{ interest.id }}">{{ interest.name }}</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Brand</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Business</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Company</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Design</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Eco</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Education</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Fashion</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Fitness</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Food</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Gaming</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Health</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Home</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Legal</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Lifestyle</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Luxury</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Marketing</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Media</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Money</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">People</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Product</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Sales</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Science</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Social</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Software</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Sport</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Startup</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Technology</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Travel</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <div class="form-check form-check-inline">
-                                                        <div class="form-group">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                                                <label class="custom-control-label" for="customCheck1">Web</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                {% endfor %}
+
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">All Categories</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Brand</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Business</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Company</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Design</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Eco</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Education</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Fashion</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Fitness</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Food</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Gaming</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Health</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Home</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Legal</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Lifestyle</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Luxury</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Marketing</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Media</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Money</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">People</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Product</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Sales</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Science</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Social</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Software</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Sport</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Startup</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Technology</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Travel</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                <div class="col-md-2">#}
+{#                                                    <div class="form-check form-check-inline">#}
+{#                                                        <div class="form-group">#}
+{#                                                            <div class="custom-control custom-checkbox">#}
+{#                                                                <input type="checkbox" class="custom-control-input" id="customCheck1">#}
+{#                                                                <label class="custom-control-label" for="customCheck1">Web</label>#}
+{#                                                            </div>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </div>#}
                                             </div>
                                             <br>
                                             <h5 class="text-md-left text-center">Alerts :</h5>

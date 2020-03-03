@@ -354,7 +354,7 @@ function launchGoogleSigninPopup(){
 }
 
 
-//lazy load disambig descriptions
+//lazy load disambig description
 function fetchWikipediaSummary(term, objRef){
   const url = window.location.origin + "/get-wiki-summary";
   let payload = {
