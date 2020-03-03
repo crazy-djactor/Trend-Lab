@@ -79,15 +79,18 @@ def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="CO
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo='', gprop='')
 
     top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=True, inc_geo_code=False)
+
     region_names = list(top_regions[term])
     region_score = list(top_regions.index.values)
-    #print("Debug region stuff: ", region_names, region_score)
+
     result = []
     for i in range(len(region_names)):
         result.append([region_names[i], region_score[i]])
 
-    result = sorted(result,key=lambda l:l[0], reverse=True)
-    if len(result) >= 7:
-        return result[:6]
-    else:
-        return result
+    result = sorted(result, key=lambda l:l[0], reverse=True)
+    return result
+
+    # if len(result) >= 7:
+    #     return result[:6]
+    # else:
+    #     return result
