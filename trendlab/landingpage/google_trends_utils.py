@@ -73,19 +73,23 @@ def get_related_topics(term, geo='GB', timeframe='today 5-y'):
 def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="COUNTRY"):
 
     pytrends = TrendReq(hl='en-US', tz=0)
+    # pytrends = TrendReq(hl='en-US', tz=360, timeout=(10, 25))
+
 
     kw_list = [term]
     #leave geo as empty so that countries without data are handled
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo='', gprop='')
 
-    top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=True, inc_geo_code=False)
+    top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=False, inc_geo_code=False)
 
-    region_names = list(top_regions[term])
-    region_score = list(top_regions.index.values)
+    region_score = list(top_regions[term])
+    region_names = list(top_regions.index.values)
 
     result = []
     for i in range(len(region_names)):
-        result.append([region_names[i], region_score[i]])
+        if region_score[i] == 0:
+            continue
+        result.append([region_score[i], region_names[i]])
 
     result = sorted(result, key=lambda l:l[0], reverse=True)
     return result
