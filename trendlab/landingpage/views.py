@@ -22,8 +22,80 @@ def index(request, username, idtoken):
     return render(request, 'landingpage.html', context)
 
 
+# @login_required
+# def search_results(request, username, idtoken):
+#     query_term = request.GET.get('q', '')
+#     location = request.GET.get('geo', '')
+#     original_term = request.GET.get('originalTerm', '')
+#     timespan = request.GET.get('timeperiod', '')
+#     print(query_term, location, original_term)
+#
+#     # prep datetime strings for now and 1 year ago
+#     stop = datetime.datetime.utcnow().strftime('%Y-%m-%d')
+#     start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1 * 365)
+#     start = start_obj.strftime('%Y-%m-%d')
+#     year_filter = start + " " + stop
+#     # get interest data
+#     if query_term != '':
+#         # getting related queries
+#         # if timespan is not defined default to 5 years
+#         if timespan == '' or timespan == ' ':
+#             timespan = "today 5-y"
+#
+#         init_session()
+#         build_pload(query_term, geo=location, timeframe=timespan)
+#         related_queries = get_related_queries(query_term)
+#         related_topics = get_related_topics(query_term)
+#         region_interest = get_interest_by_region(query_term)
+#
+#         init_session()
+#         interest_data_5y = fetch_interest_over_time(query_term, timeframe='today 5-y')
+#         init_session()
+#         interest_data_12m = fetch_interest_over_time(query_term, timeframe=year_filter)
+#         init_session()
+#         interest_data_1m = fetch_interest_over_time(query_term, timeframe='today 1-m')
+#
+#         wikipedia_summary = get_wikipedia_summary(original_term)
+#         top_news = get_top_news(original_term)
+#     else:
+#         interest_data_5y, interest_data_1m, interest_data_12m = None, None, None
+#         related_queries, related_topics, wikipedia_summary, region_interest, top_news = None, None, None, None, None
+#
+#     chart_data_dump = json.dumps({
+#         "interest_data_5y": interest_data_5y,
+#         "interest_data_12m": interest_data_12m,
+#         "interest_data_1m": interest_data_1m
+#     })
+#     # loading current country name in server  - easier that way
+#     cur_country_name = pycountry.countries.get(alpha_2=location)
+#     if cur_country_name == None:
+#         cur_country_name = 'Worldwide'
+#     else:
+#         # print(cur_country_name)
+#         cur_country_name = cur_country_name.name
+#
+#     # print(type(related_queries), related_queries)
+#     # print(type(related_topics), related_topics)
+#     context = {
+#         "username": username,
+#         "chart_data": chart_data_dump,
+#         "related_queries": related_queries,
+#         "search_term_name": original_term,
+#         "related_topics": related_topics,
+#         "wikipedia_summary": wikipedia_summary,
+#         "region_interest": region_interest,
+#         "top_news": top_news,
+#         "countries": pycountry.countries,
+#         "current_country": location,
+#         "current_country_name": cur_country_name,
+#         "year_filter": year_filter,
+#         "timespan": timespan
+#     }
+#     return render(request, 'search_results.html', context)
+
+
 @login_required
-def search_results(request, username, idtoken):
+def search_results(request, username=None, idtoken=None):
     query_term = request.GET.get('q', '')
     location = request.GET.get('geo', '')
     original_term = request.GET.get('originalTerm', '')
@@ -66,11 +138,11 @@ def search_results(request, username, idtoken):
     if cur_country_name == None:
         cur_country_name = 'Worldwide'
     else:
-        # print(cur_country_name)
+        print(cur_country_name)
         cur_country_name = cur_country_name.name
 
-    # print(type(related_queries), related_queries)
-    # print(type(related_topics), related_topics)
+    print(type(related_queries), related_queries)
+    print(type(related_topics), related_topics)
     context = {
         "username": username,
         "chart_data": chart_data_dump,
