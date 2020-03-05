@@ -70,31 +70,34 @@ def get_related_topics(term, geo='GB', timeframe='today 5-y'):
     return json.dumps(related_topics)
 
 
-def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="COUNTRY"):
-
+def get_interest_by_region(term, geo='US', timeframe='today 5-y', resolution="REGION"):
     pytrends = TrendReq(hl='en-US', tz=0)
-    # pytrends = TrendReq(hl='en-US', tz=360, timeout=(10, 25))
-
+    # pytrends = TrendReq(hl='en-US', tz=0, timeout=(10,25), proxies=['https://34.203.233.13:80',], retries=2, backoff_factor=0.1)
 
     kw_list = [term]
-    #leave geo as empty so that countries without data are handled
-    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo='', gprop='')
+    # leave geo as empty so that countries without data are handled
+    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
 
-    top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=False, inc_geo_code=False)
+    # top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=True, inc_geo_code=True)
+    top_regions = pytrends.interest_by_region(resolution=resolution)
 
-    region_score = list(top_regions[term])
-    region_names = list(top_regions.index.values)
+    region_names = list(top_regions[term])
+    region_score = list(top_regions.index.values)
 
+    # print("Debug region stuff: ", region_names, region_score)
     result = []
     for i in range(len(region_names)):
-        if region_score[i] == 0:
-            continue
-        result.append([region_score[i], region_names[i]])
+        result.append([region_names[i], region_score[i]])
 
-    result = sorted(result, key=lambda l:l[0], reverse=True)
-    return result
+    result = sorted(result, key=lambda l: l[0], reverse=True)
+    i = range(len(result))
+    for i in range(len(result)):
+        if result[i][0] == 0:
+            break
 
+    return result[:i]
     # if len(result) >= 7:
     #     return result[:6]
     # else:
     #     return result
+
