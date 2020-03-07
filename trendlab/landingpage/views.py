@@ -107,23 +107,26 @@ def search_results(request, username=None, idtoken=None):
     start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1 * 365)
     start = start_obj.strftime('%Y-%m-%d')
     year_filter = start + " " + stop
+    print(timespan)
     # get interest data
     if query_term != '':
-        interest_data_5y = fetch_interest_over_time(query_term, geo=location, timeframe='today 5-y')
-
-        interest_data_12m = fetch_interest_over_time(query_term, geo=location, timeframe=year_filter)
-        interest_data_1m = fetch_interest_over_time(query_term, geo=location, timeframe='today 1-m')
+        interest_data_5y = fetch_interest_over_time(query_term, geo=location, timeframe='all')
+        interest_data_12m = interest_data_5y
+        interest_data_1m = interest_data_5y
+        # interest_data_12m = fetch_interest_over_time(query_term, geo=location, timeframe=year_filter)
+        # interest_data_1m = fetch_interest_over_time(query_term, geo=location, timeframe='today 1-m')
 
         # getting related queries
         # if timespan is not defined default to 5 years
         if timespan == '' or timespan == ' ':
             timespan = "today 5-y"
 
-        related_queries = get_related_queries(query_term, geo=location, timeframe=timespan)
-        related_topics = get_related_topics(query_term, geo=location, timeframe=timespan)
-        region_interest = get_interest_by_region(query_term, geo=location, timeframe=timespan)
-        wikipedia_summary = get_wikipedia_summary(original_term)
-        top_news = get_top_news(original_term)
+        # related_queries = get_related_queries(query_term, geo=location, timeframe=timespan)
+        # related_topics = get_related_topics(query_term, geo=location, timeframe=timespan)
+        # region_interest = get_interest_by_region(query_term, geo=location, timeframe=timespan)
+        # wikipedia_summary = get_wikipedia_summary(original_term)
+        # top_news = get_top_news(original_term)
+        related_queries, related_topics, wikipedia_summary, region_interest, top_news = None, None, None, None, None
     else:
         interest_data_5y, interest_data_1m, interest_data_12m = None, None, None
         related_queries, related_topics, wikipedia_summary, region_interest, top_news = None, None, None, None, None
@@ -158,6 +161,7 @@ def search_results(request, username=None, idtoken=None):
         "year_filter": year_filter,
         "timespan": timespan
     }
+
     return render(request, 'search_results.html', context)
 
 

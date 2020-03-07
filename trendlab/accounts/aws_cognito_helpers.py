@@ -42,37 +42,61 @@ def sign_up(username, password, firstname, lastname):
                     'Name': 'family_name',
                     'Value': lastname
                 }
-            ]
-            )
+            ])
+
     except client.exceptions.UsernameExistsException as e:
-        return {"error": False,
-                "success": True,
+        return {"success": True,
                 "message": "This username already exists",
+                "msg_error": 1,
                 "data": None}
     except client.exceptions.InvalidPasswordException as e:
 
-        return {"error": False,
-                "success": True,
+        return {"success": True,
                 "message": "Password should have Caps,\
                                   Special chars, Numbers",
+                "msg_error": 2,
                 "data": None}
     except client.exceptions.UserLambdaValidationException as e:
-        return {"error": False,
-                "success": True,
+        return {"success": True,
                 "message": "Email already exists",
+                "msg_error": 3,
                 "data": None}
 
     except Exception as e:
-        return {"error": False,
-                "success": True,
+        return {"success": False,
                 "message": str(e),
+                "msg_error": 4,
                 "data": None}
-    return resp
-    # return {"error": False,
-    #         "success": True,
-    #         "message": "Please confirm your signup, \
-    #                             check Email for validation code",
-    #         "data": None}
+
+    return {"success": True,
+            "msg_error": 0,
+            "message": "Please confirm your signup, \
+                                check Email for validation code",
+            "data": resp}
+    # try:
+    #     resp = client.sign_up(
+    #         ClientId=CLIENT_ID,
+    #         SecretHash=get_secret_hash(username),
+    #         Username=username,
+    #         Password=password,
+    #         UserAttributes=[
+    #             {
+    #                 'Name': 'name',
+    #                 'Value': firstname
+    #             },
+    #             {
+    #                 'Name': 'family_name',
+    #                 'Value': lastname
+    #             }
+    #         ]
+    #         )
+    # except client.exceptions.UsernameExistsException as e:
+    #     print(e)
+    #     return None
+    # except Exception as e:
+    #     print(e)
+    #     return None
+
 
 def initiate_auth(username, password):
     try:

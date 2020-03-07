@@ -28,7 +28,6 @@ class SignupForm(forms.Form):
     agree_tos = forms.BooleanField(widget=forms.CheckboxInput(attrs=agree_tos_attrs))
 
 
-
 class LoginForm(forms.Form):
     email_attrs = {
     "type":"email", "id":"email", "class":"form-control pl-5", "placeholder":"Email", "name":"email", "required":""
@@ -42,6 +41,7 @@ class LoginForm(forms.Form):
     email = forms.EmailField(max_length=100, widget=forms.TextInput(attrs=email_attrs))
     password = forms.CharField(max_length=80, widget=forms.TextInput(attrs=password_attrs))
     remember_me = forms.BooleanField(initial=False, required=False,widget=forms.CheckboxInput(attrs=agree_tos_attrs))
+
 
 class ResetPasswordForm(forms.Form):
     email_attrs = {
