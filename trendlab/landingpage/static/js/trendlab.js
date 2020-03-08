@@ -169,6 +169,62 @@ $('#search-form').on('submit',function(e){
 
 
 //handling results in searchpage below
+//chart 0 for interest over time
+function plotInterestChart0(){
+  var ctx0 = document.getElementById("allinterest");
+  var myChart0 = new Chart(ctx0, {
+    type: 'line',
+    data: {
+      backgroundColor: "rgba(255,255,255,0.5)",
+      labels: chartData['interest_data_all']['date_values'],
+      datasets: [{
+        data: chartData['interest_data_all']['interest_values'],
+        fill: false,
+        backgroundColor: "#2f55d4",
+        pointBackgroundColor: "#fff",
+        pointBorderColor: "#fff",
+        pointRadius:0,
+        borderColor:"#2f55d4",
+      }]
+    },
+    options: {
+           legend: {
+              display: false
+           },
+           // tooltips: {
+           //      enabled: false
+           // },
+           responsive: true,
+           maintainAspectRatio: false,
+           scales: {
+            yAxes: [{
+              gridLines: {
+                  drawBorder: false,
+              },
+              ticks: {
+                display: false,
+                // beginAtZero: true,
+                // min: 0,
+                // max: 100,
+                // stepSize: 25,
+              }
+            }],
+            xAxes:[{
+              type: 'time',
+              gridLines: {
+                  color: "rgba(0, 0, 0, 0)",
+              },
+              time: {
+                    unit: 'week',
+                    unitStepSize: 50
+              }
+            }]
+          },
+
+      }
+  });
+}
+plotInterestChart0();
 
 //chart 1 for interest over time
 function plotInterestChart1(){
@@ -192,9 +248,9 @@ function plotInterestChart1(){
            legend: {
               display: false
            },
-           tooltips: {
-                enabled: false
-           },
+           // tooltips: {
+           //      enabled: false
+           // },
            responsive: true,
            maintainAspectRatio: false,
            scales: {
@@ -339,6 +395,60 @@ function plotInterestChart3(){
 }
 plotInterestChart3();
 
+function plotInterestChart4(){
+  var ctx4 = document.getElementById("7daysinterest");
+  var myChart4 = new Chart(ctx4, {
+    type: 'line',
+    data: {
+      backgroundColor: "rgba(255,255,255,0.5)",
+      labels: chartData['interest_data_7days']['date_values'],
+      datasets: [{
+        data: chartData['interest_data_7days']['interest_values'],
+        fill: false,
+        pointBackgroundColor: "#fff",
+        pointBorderColor: "#fff",
+        pointRadius:0,
+        borderColor:"#2f55d4",
+      }]
+    },
+    options: {
+           legend: {
+              display: false
+           },
+           tooltips: {
+                enabled: false
+           },
+           responsive: true,
+           maintainAspectRatio: false,
+           scales: {
+            yAxes: [{
+              gridLines: {
+                  drawBorder: false,
+              },
+              ticks: {
+                display: false,
+                // beginAtZero: true,
+                // min: 0,
+                // max: 100,
+                // stepSize: 25,
+              }
+            }],
+            xAxes:[{
+              type: 'time',
+              gridLines: {
+                  color: "rgba(0, 0, 0, 0)",
+              },
+              time: {
+                    unit: 'day',
+                    unitStepSize: 5
+              }
+            }]
+          },
+
+      }
+  });
+}
+plotInterestChart4();
 
 //login popup
 function launchGoogleSigninPopup(){
@@ -354,7 +464,7 @@ function launchGoogleSigninPopup(){
 }
 
 
-//lazy load disambig description
+//lazy load disambig descriptions
 function fetchWikipediaSummary(term, objRef){
   const url = window.location.origin + "/get-wiki-summary";
   let payload = {

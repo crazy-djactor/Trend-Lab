@@ -147,161 +147,161 @@
         <script src="{% static 'js/auth-helper.js' %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
-        <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    // label: '# of Votes',
-                    data: [ 1, 2, 3, 20, 30, 45],
-                    backgroundColor: [
-                      '#36a1eb'
-                    ],
-                    borderColor: [
-                      '#36a1eb'
-
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                legend: {
-                    display: false,
-                },
-                elements: {
-                    point:{
-                        radius: 0
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display:false,
-                            drawBorder: false,
-                        },
-                        ticks: {
-                            display: false,
-                        },
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            display:false,
-                            drawBorder: false,
-                        },
-                        ticks: {
-                            display: false,
-                        },
-                    }]
-                }
-            }
-        });
-        </script>
-        <script>
-        var ctx = document.getElementById('myChart1').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    // label: '# of Votes',
-                    data: [ 3, 5, 2, 3, 12, 19],
-                    backgroundColor: [
-                      '#fecd56'
-                    ],
-                    borderColor: [
-                      '#fecd56'
-
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                legend: {
-                    display: false,
-                },
-                elements: {
-                    point:{
-                        radius: 0
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display:false,
-                            drawBorder: false,
-                        },
-                        ticks: {
-                            display: false,
-                        },
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            display:false,
-                            drawBorder: false,
-                        },
-                        ticks: {
-                            display: false,
-                        },
-                    }]
-                }
-            }
-        });
-        </script>
-        <script>
-        var ctx = document.getElementById('myChart2').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-
-            data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                datasets: [{
-                    // label: '# of Votes',
-                    data: [ 3, 5, 7, 10, 12, 19],
-                    backgroundColor: [
-                      '#ff6383'
-                    ],
-                    borderColor: [
-                      '#ff6383'
-
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                legend: {
-                    display: false,
-                },
-                elements: {
-                    point:{
-                        radius: 0
-                    }
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            display:false,
-                            drawBorder: false,
-                        },
-                        ticks: {
-                            display: false,
-                        },
-                    }],
-                    yAxes: [{
-                        gridLines: {
-                            display:false,
-                            drawBorder: false,
-                        },
-                        ticks: {
-                            display: false,
-                        },
-                    }]
-                }
-            }
-        });
-        </script>
+{#        <script>#}
+{#        var ctx = document.getElementById('myChart').getContext('2d');#}
+{#        var myChart = new Chart(ctx, {#}
+{#            type: 'line',#}
+{##}
+{#            data: {#}
+{#                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],#}
+{#                datasets: [{#}
+{#                    // label: '# of Votes',#}
+{#                    data: [ 1, 2, 3, 20, 30, 45],#}
+{#                    backgroundColor: [#}
+{#                      '#36a1eb'#}
+{#                    ],#}
+{#                    borderColor: [#}
+{#                      '#36a1eb'#}
+{##}
+{#                    ],#}
+{#                    borderWidth: 1#}
+{#                }]#}
+{#            },#}
+{#            options: {#}
+{#                legend: {#}
+{#                    display: false,#}
+{#                },#}
+{#                elements: {#}
+{#                    point:{#}
+{#                        radius: 0#}
+{#                    }#}
+{#                },#}
+{#                scales: {#}
+{#                    xAxes: [{#}
+{#                        gridLines: {#}
+{#                            display:false,#}
+{#                            drawBorder: false,#}
+{#                        },#}
+{#                        ticks: {#}
+{#                            display: false,#}
+{#                        },#}
+{#                    }],#}
+{#                    yAxes: [{#}
+{#                        gridLines: {#}
+{#                            display:false,#}
+{#                            drawBorder: false,#}
+{#                        },#}
+{#                        ticks: {#}
+{#                            display: false,#}
+{#                        },#}
+{#                    }]#}
+{#                }#}
+{#            }#}
+{#        });#}
+{#        </script>#}
+{#        <script>#}
+{#        var ctx = document.getElementById('myChart1').getContext('2d');#}
+{#        var myChart = new Chart(ctx, {#}
+{#            type: 'line',#}
+{##}
+{#            data: {#}
+{#                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],#}
+{#                datasets: [{#}
+{#                    // label: '# of Votes',#}
+{#                    data: [ 3, 5, 2, 3, 12, 19],#}
+{#                    backgroundColor: [#}
+{#                      '#fecd56'#}
+{#                    ],#}
+{#                    borderColor: [#}
+{#                      '#fecd56'#}
+{##}
+{#                    ],#}
+{#                    borderWidth: 1#}
+{#                }]#}
+{#            },#}
+{#            options: {#}
+{#                legend: {#}
+{#                    display: false,#}
+{#                },#}
+{#                elements: {#}
+{#                    point:{#}
+{#                        radius: 0#}
+{#                    }#}
+{#                },#}
+{#                scales: {#}
+{#                    xAxes: [{#}
+{#                        gridLines: {#}
+{#                            display:false,#}
+{#                            drawBorder: false,#}
+{#                        },#}
+{#                        ticks: {#}
+{#                            display: false,#}
+{#                        },#}
+{#                    }],#}
+{#                    yAxes: [{#}
+{#                        gridLines: {#}
+{#                            display:false,#}
+{#                            drawBorder: false,#}
+{#                        },#}
+{#                        ticks: {#}
+{#                            display: false,#}
+{#                        },#}
+{#                    }]#}
+{#                }#}
+{#            }#}
+{#        });#}
+{#        </script>#}
+{#        <script>#}
+{#        var ctx = document.getElementById('myChart2').getContext('2d');#}
+{#        var myChart = new Chart(ctx, {#}
+{#            type: 'line',#}
+{##}
+{#            data: {#}
+{#                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],#}
+{#                datasets: [{#}
+{#                    // label: '# of Votes',#}
+{#                    data: [ 3, 5, 7, 10, 12, 19],#}
+{#                    backgroundColor: [#}
+{#                      '#ff6383'#}
+{#                    ],#}
+{#                    borderColor: [#}
+{#                      '#ff6383'#}
+{##}
+{#                    ],#}
+{#                    borderWidth: 1#}
+{#                }]#}
+{#            },#}
+{#            options: {#}
+{#                legend: {#}
+{#                    display: false,#}
+{#                },#}
+{#                elements: {#}
+{#                    point:{#}
+{#                        radius: 0#}
+{#                    }#}
+{#                },#}
+{#                scales: {#}
+{#                    xAxes: [{#}
+{#                        gridLines: {#}
+{#                            display:false,#}
+{#                            drawBorder: false,#}
+{#                        },#}
+{#                        ticks: {#}
+{#                            display: false,#}
+{#                        },#}
+{#                    }],#}
+{#                    yAxes: [{#}
+{#                        gridLines: {#}
+{#                            display:false,#}
+{#                            drawBorder: false,#}
+{#                        },#}
+{#                        ticks: {#}
+{#                            display: false,#}
+{#                        },#}
+{#                    }]#}
+{#                }#}
+{#            }#}
+{#        });#}
+{#        </script>#}
     </body>
 </html>

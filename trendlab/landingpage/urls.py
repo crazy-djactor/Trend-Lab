@@ -23,8 +23,8 @@ urlpatterns = [
     path('terms-and-conditions/', views.termsandconditions, name='termsandcondition'),
     path('settings/', views.settings, name='settings'),
     path('search/autocomplete/', views.search_autocomplete, name='autocomplete'),
-    path('get-wiki-summary', views.load_wikipedia_summary, name='load_wiki_summary')
-
+    path('get-wiki-summary', views.load_wikipedia_summary, name='load_wiki_summary'),
+    # path('get-search_result/', views.get_search_result, name='get_search_result')
 ]
 #
 # path('signup/', views.signup, name='signup'),
