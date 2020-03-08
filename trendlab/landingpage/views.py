@@ -22,9 +22,13 @@ def index(request, username, idtoken):
 
 @login_required
 def search_results(request, username, idtoken):
+	pass
+
+@login_required
+def search_results(request, username, idtoken):
 
 	query_term = request.GET.get('q','')
-	location = request.GET.get('geo','')
+	location = request.GET.get('geo','US')
 	original_term = request.GET.get('originalTerm', '')
 	timespan = request.GET.get('timeperiod','')
 	print(query_term, location, original_term)

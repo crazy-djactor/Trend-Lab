@@ -69,13 +69,13 @@ def get_related_topics(term, geo='GB', timeframe='today 5-y'):
     return json.dumps(related_topics)
 
 
-def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="COUNTRY"):
+def get_interest_by_region(term, geo='US', timeframe='today 5-y', resolution="REGION"):
 
     pytrends = TrendReq(hl='en-US', tz=0)
 
     kw_list = [term]
     #leave geo as empty so that countries without data are handled
-    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo='', gprop='')
+    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
 
     top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=True, inc_geo_code=False)
     region_names = list(top_regions[term])
