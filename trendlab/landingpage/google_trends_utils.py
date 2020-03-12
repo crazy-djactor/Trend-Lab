@@ -32,14 +32,17 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
         "interest_values": interest_values,
         "date_values": date_values,
     }
-    return return_dict
+    return return_dict, pytrends
 
 
-def get_related_queries(term, geo='GB', timeframe='today 5-y'):
-
-    pytrends = TrendReq(hl='en-US', tz=0)
+def get_related_queries(sessiontrend=None, term='', geo='GB', timeframe='today 5-y'):
     kw_list = [term]
-    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
+
+    if sessiontrend is None:
+        pytrends = TrendReq(hl='en-US', tz=0)
+        pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
+    else:
+        pytrends = sessiontrend
 
     related_queries = pytrends.related_queries()
     #print(related_queries)
@@ -56,12 +59,14 @@ def get_related_queries(term, geo='GB', timeframe='today 5-y'):
     return json.dumps(related_queries)
 
 
-def get_related_topics(term, geo='GB', timeframe='today 5-y'):
-
-    pytrends = TrendReq(hl='en-US', tz=0)
-
+def get_related_topics(sessiontrend=None, term='', geo='GB', timeframe='today 5-y'):
     kw_list = [term]
-    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
+
+    if sessiontrend is None:
+        pytrends = TrendReq(hl='en-US', tz=0)
+        pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
+    else:
+        pytrends = sessiontrend
 
     related_topics = pytrends.related_topics()
     related_topics = related_topics[term]['top'].values.tolist()
@@ -69,13 +74,13 @@ def get_related_topics(term, geo='GB', timeframe='today 5-y'):
     return json.dumps(related_topics)
 
 
-def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="COUNTRY"):
-
-    pytrends = TrendReq(hl='en-US', tz=0)
-
+def get_interest_by_region(sessiontrend=None, term='', geo='GB', timeframe='today 5-y', resolution="COUNTRY"):
     kw_list = [term]
-    #leave geo as empty so that countries without data are handled
-    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo='', gprop='')
+    if sessiontrend is None:
+        pytrends = TrendReq(hl='en-US', tz=0)
+        pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
+    else:
+        pytrends = sessiontrend
 
     top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=True, inc_geo_code=False)
     region_names = list(top_regions[term])

@@ -103,27 +103,27 @@ $(document).ready(function(){
     var current_timeFrame = 1;
 //function to toggle the time periods btn 5 yrs, 1 year and 30 days
     $( "#toggle_interest_all" ).click(function() {
-        toggleTimePeriod('all');
+        toggleTimePeriod(s_queryTerm, 'all');
     });
     $( "#toggle_interest_5year" ).click(function() {
-        toggleTimePeriod('today 5-y');
+        toggleTimePeriod(s_queryTerm, 'today 5-y');
     });
     $( "#toggle_year_filter" ).click(function() {
-        toggleTimePeriod(year_filter);
+        toggleTimePeriod(s_queryTerm, year_filter);
     });
 
     $( "#toggle_today1_m" ).click(function() {
-        toggleTimePeriod('today 1-m');
+        toggleTimePeriod(s_queryTerm, 'today 1-m');
     });
 
     $( "#toggle_now_7d" ).click(function() {
-        toggleTimePeriod('now 7-d');
+        toggleTimePeriod(s_queryTerm, 'now 7-d');
     });
 
-    function toggleTimePeriod(timeframe){
+    function toggleTimePeriod(toggleQuery, timeframe){
         const url = window.location.origin + "/search/get_search_result/";
         let payload = {
-            'q' : s_queryTerm,
+            'q' : toggleQuery,
             'originalTerm': searchResTerm,
             'geo': 'US',
             'timeperiod': timeframe
@@ -138,8 +138,8 @@ $(document).ready(function(){
             data : payload,
             dataType:'json',
             success : function(data) {
-                alert(data.query_term)
-                // plotInterestChart0(data, timeframe);
+                alert(data)
+                plotInterestChart0(data.chart_interest_data, timeframe);
             },
             error : function(request,error)
             {
@@ -210,8 +210,9 @@ $(document).ready(function(){
             $(this).click(function(){
                 const qTerm = $(this).attr('data-mid');
                 const originalTerm = $(this).attr('data-title');
-                alert(qTerm + ' ' + originalTerm);
+
                 submitWithSuggestion(qTerm, originalTerm);
+                // toggleTimePeriod(, '')
             })
         });
     }
@@ -280,9 +281,9 @@ $(document).ready(function(){
             type: 'line',
             data: {
                 backgroundColor: "rgba(255,255,255,0.5)",
-                labels: data[0]['date_values'],
+                labels: data['date_values'],
                 datasets: [{
-                    data: data[0]['interest_values'],
+                    data: data['interest_values'],
                     fill: false,
                     backgroundColor: "#2f55d4",
                     pointBackgroundColor: "#fff",
@@ -831,6 +832,11 @@ $(document).ready(function(){
         $('#related-queries-nav').append(newNav);
     }
 
+
+    if ((typeof timeSpan !== 'undefined') && (timeSpan !== '')){
+        alert('document ready ' + timeSpan);
+        plotInterestChart0(chartData, timeSpan)
+    }
 
 });
 

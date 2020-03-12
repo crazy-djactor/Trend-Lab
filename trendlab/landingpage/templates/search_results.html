@@ -609,33 +609,43 @@
         {% endif %}
         <!-- End Work Detail -->
         <script>
-            var relatedTopics = null;
-            if ("{{ related_topics |safe }}" !== 'None') {
-                relatedTopics = {{ related_topics |safe }};
-            }
+            let relatedTopics = {{ related_topics |safe }};
+            let relatedQueries = {{ related_queries | safe}};
+            let chartData = {{ chart_data | safe }};
+            let newsStore = {{ top_news | safe }};
+            let regionInterest = {{ region_interest | safe}};
+            let timeSpan = "{{ timespan | safe }}";
+            let s_queryTerm  = "{{ query_term | safe }}";
+            let searchResTerm  = "{{ search_term_name | safe }}";
+            let year_filter = '{{year_filter}}';
+            {#var relatedTopics = null;#}
+            {#if ("{{ related_topics |safe }}" !== 'None') {#}
+            {#    relatedTopics = {{ related_topics |safe }};#}
+            {# }#}
+            {##}
+            {#var relatedQueries = null;#}
+            {#if ("{{ related_queries | safe}}" !== 'None'){#}
+            {#    relatedQueries = {{ related_queries | safe}};#}
+            {# }#}
 
-            var relatedQueries = null;
-            if ("{{ related_queries | safe}}" !== 'None'){
-                relatedQueries = {{ related_queries | safe}};
-            }
+            {#var chartData = {{ chart_data | safe }};#}
+            {##}
+            {#var newsStore = null;#}
+            {#if ("{{ top_news | safe }}" !== 'None'){#}
+            {#    newsStore = {{ top_news | safe }};#}
+            {# }#}
+            {##}
+            {#var regionInterest = null;#}
+            {#if ("{{ region_interest | safe}}" !== 'None'){#}
+            {#    regionInterest = {{ region_interest | safe}};#}
+            {# }#}
 
-            var chartData = {{ chart_data | safe }};
+            {#var timeSpan = "{{ timespan | safe }}";#}
+            {#var s_queryTerm  = "{{ query_term | safe }}";#}
+            {#var searchResTerm  = "{{ search_term_name | safe }}";#}
+            {#var year_filter = '{{year_filter}}';#}
 
-            var newsStore = null;
-            if ("{{ top_news | safe }}" !== 'None'){
-                newsStore = {{ top_news | safe }};
-            }
 
-            var regionInterest = null;
-            if ("{{ region_interest | safe}}" !== 'None'){
-                regionInterest = {{ region_interest | safe}};
-            }
-
-            var timeSpan = "{{ timespan | safe }}";
-            var s_queryTerm  = "{{ query_term | safe }}";
-            alert("query_term" + ' ' + s_queryTerm);
-            var searchResTerm  = "{{ search_term_name | safe }}";
-            var year_filter = '{{year_filter}}';
         </script>
 
 {% endblock %}
