@@ -56,8 +56,8 @@ def get_related_queries(sessiontrend=None, term='', geo='GB', timeframe='today 5
     except:
         related_queries = []
 
-    return related_queries
-    # return json.dumps(related_queries)
+    # return related_queries
+    return json.dumps(related_queries)
 
 
 def get_related_topics(sessiontrend=None, term='', geo='GB', timeframe='today 5-y'):
@@ -72,8 +72,8 @@ def get_related_topics(sessiontrend=None, term='', geo='GB', timeframe='today 5-
     related_topics = pytrends.related_topics()
     related_topics = related_topics[term]['top'].values.tolist()
     #print(len(related_topics), related_topics)
-    return related_topics
-    # return json.dumps(related_topics)
+    # return related_topics
+    return json.dumps(related_topics)
 
 
 def get_interest_by_region(sessiontrend=None, term='', geo='GB', timeframe='today 5-y', resolution="COUNTRY"):

@@ -60,12 +60,6 @@ def get_search_result(request):
     # return JsonResponse(response_data)
     # prep datetime strings for now and 1 year ago
     year_filter = ''
-    if timespan == 'yearfilter' :
-        stop = datetime.datetime.utcnow().strftime('%Y-%m-%d')
-        start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1 * 365)
-        start = start_obj.strftime('%Y-%m-%d')
-        year_filter = start + " " + stop
-        timespan = year_filter
     # # get interest data
     try:
         if s_query_term != '':
@@ -77,16 +71,26 @@ def get_search_result(request):
                 }
                 return JsonResponse(response_data)
             # getting related queries
-            chart_interest_data, session_trends = fetch_interest_over_time(term=s_query_term, geo=location, timeframe=timespan)
+            if timespan == 'yearfilter':
+                stop = datetime.datetime.utcnow().strftime('%Y-%m-%d')
+                start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1 * 365)
+                start = start_obj.strftime('%Y-%m-%d')
+                year_filter = start + " " + stop
+                time_frame = year_filter
+            else:
+                time_frame = timespan
+            chart_interest_data, session_trends = fetch_interest_over_time(term=s_query_term, geo=location,
+                                                                               timeframe=time_frame)
+
             time.sleep(1)
             related_queries = get_related_queries(sessiontrend=session_trends, term=s_query_term, geo=location,
-                                                  timeframe=timespan)
+                                                  timeframe=time_frame)
             time.sleep(1)
             related_topics = get_related_topics(sessiontrend=session_trends, term=s_query_term, geo=location,
-                                                timeframe=timespan)
+                                                timeframe=time_frame)
             time.sleep(1)
             region_interest = get_interest_by_region(sessiontrend=session_trends, term=s_query_term, geo=location,
-                                                     timeframe=timespan)
+                                                     timeframe=time_frame)
             time.sleep(1)
             wiki_summary = get_wikipedia_summary(original_term)
             top_news = get_top_news(original_term)

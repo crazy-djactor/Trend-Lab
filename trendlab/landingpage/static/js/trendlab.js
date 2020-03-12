@@ -105,7 +105,7 @@ $(document).ready(function(){
         toggleTimePeriod(s_queryTerm, 'today 5-y');
     });
     $( "#toggle_year_filter" ).click(function() {
-        toggleTimePeriod(s_queryTerm, year_filter);
+        toggleTimePeriod(s_queryTerm, 'yearfilter');
     });
 
     $( "#toggle_today1_m" ).click(function() {
@@ -137,11 +137,11 @@ $(document).ready(function(){
             dataType:'json',
 
             success : function(data) {
-                alert(data.related_topics);
-                relatedTopics = data.related_topics;
-                relatedQueries = data.related_queries;
+                // alert(data.related_topics);
+                relatedTopics = JSON.parse(data.related_topics);
+                relatedQueries = JSON.parse(data.related_queries);
                 chartData = data.chart_data;
-                newsStore = data.top_news;
+                newsStore = JSON.parse(data.top_news);
                 regionInterest = data.region_interest;
                 timeSpan = data.timespan;
                 s_queryTerm  = data.query_term;
@@ -813,7 +813,7 @@ $(document).ready(function(){
 
         $('#related-topic-nav').find("span").each(function(index) {
             $(this).click(function() {
-                let spanValue = $(this).attr()
+                let spanValue = $(this).attr('data-value')
                 showRelatedTopics(spanValue);
             });
         });

@@ -1,5 +1,5 @@
 from GoogleNews import GoogleNews
-
+import json
 
 
 def get_top_news(term, limit=3):
@@ -11,4 +11,4 @@ def get_top_news(term, limit=3):
     except:
         pass
 
-    return result
+    return json.dumps(result)
