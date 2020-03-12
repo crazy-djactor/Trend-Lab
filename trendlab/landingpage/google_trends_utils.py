@@ -17,6 +17,7 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
     kw_list = [term]
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
     interest_dataframe = pytrends.interest_over_time()
+
     try:
         interest_values = list(interest_dataframe[term])
         date_values_d64 = list(interest_dataframe.index.values)
@@ -31,7 +32,6 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
         "interest_values": interest_values,
         "date_values": date_values,
     }
-
     return return_dict
 
 
@@ -69,13 +69,13 @@ def get_related_topics(term, geo='GB', timeframe='today 5-y'):
     return json.dumps(related_topics)
 
 
-def get_interest_by_region(term, geo='US', timeframe='today 5-y', resolution="REGION"):
+def get_interest_by_region(term, geo='GB', timeframe='today 5-y', resolution="COUNTRY"):
 
     pytrends = TrendReq(hl='en-US', tz=0)
 
     kw_list = [term]
     #leave geo as empty so that countries without data are handled
-    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
+    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo='', gprop='')
 
     top_regions = pytrends.interest_by_region(resolution=resolution, inc_low_vol=True, inc_geo_code=False)
     region_names = list(top_regions[term])

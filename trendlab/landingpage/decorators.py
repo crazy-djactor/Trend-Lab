@@ -50,7 +50,6 @@ def login_required(f):
 
     return wrapper
 
-
 #optional login decorator
 def login_optional(f):
     """

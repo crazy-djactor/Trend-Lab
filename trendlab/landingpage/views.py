@@ -1,3 +1,5 @@
+import time
+
 from django.shortcuts import render
 from django.core.exceptions import SuspiciousOperation
 from django.http import JsonResponse
@@ -12,6 +14,7 @@ from .google_news_utils import get_top_news
 import pycountry
 
 
+
 # Create your views here.
 @login_optional
 def index(request, username, idtoken):
@@ -20,15 +23,92 @@ def index(request, username, idtoken):
 	}
 	return render(request, 'landingpage.html', context)
 
-@login_required
-def search_results(request, username, idtoken):
-	pass
+
+@csrf_exempt
+def get_search_result(request):
+
+	s_query_term = request.POST.get('q', None)
+	# query_term = json_data['q']
+	if request.POST.get('geo') is not None and request.POST.get('geo') != '':
+		location = request.GET.get('geo')
+	else:
+		location = 'US'
+	if request.POST.get('originalTerm') is not None and request.POST.get('originalTerm') != '':
+		original_term = request.GET.get('originalTerm')
+	else:
+		original_term = ''
+	if request.POST.get('timeperiod') is not None and request.POST.get('timeperiod') != '':
+		timespan = request.POST.get('timeperiod')
+	else:
+		timespan = ''
+
+	print(s_query_term, location, original_term)
+	response_data = {
+		'query_term': s_query_term,
+		'location': location
+	}
+	return JsonResponse(response_data)
+
+	# prep datetime strings for now and 1 year ago
+	# stop = datetime.datetime.utcnow().strftime('%Y-%m-%d')
+	# start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1 * 365)
+	# start = start_obj.strftime('%Y-%m-%d')
+	# year_filter = start + " " + stop
+	# # get interest data
+	# try:
+	# 	if query_term != '':
+	# 		# if timespan is not defined default to 5 years
+	# 		if timespan == '' or timespan == ' ':
+	# 			timespan = "today 5-y"
+	# 		# getting related queries
+	# 		interest_data = fetch_interest_over_time(term=query_term, geo=location, timeframe=timespan)
+	# 		related_queries = get_related_queries(term=query_term, geo=location, timeframe=timespan)
+	# 		related_topics = get_related_topics(term=query_term, geo=location, timeframe=timespan)
+	# 		region_interest = get_interest_by_region(term=query_term, geo=location, timeframe=timespan)
+	# 		wikipedia_summary = get_wikipedia_summary(original_term)
+	# 		top_news = get_top_news(original_term)
+	# 	else:
+	# 		interest_data = None, None, None
+	# 		related_queries, related_topics, wikipedia_summary, region_interest, top_news = None, None, None, None, None
+	#
+	# 	chart_data_dump = json.dumps({
+	# 		"interest_data": interest_data,
+	# 	})
+	# 	# loading current country name in server  - easier that way
+	# 	cur_country_name = pycountry.countries.get(alpha_2=location)
+	# 	if cur_country_name == None:
+	# 		cur_country_name = 'Worldwide'
+	# 	else:
+	# 		# print(cur_country_name)
+	# 		cur_country_name = cur_country_name.name
+	#
+	# 	# print(type(related_queries), related_queries)
+	# 	# print(type(related_topics), related_topics)
+	# 	response_data = {
+	# 		"chart_data": chart_data_dump,
+	# 		"related_queries": related_queries,
+	# 		"query_term": query_term,
+	# 		"search_term_name": original_term,
+	# 		"related_topics": related_topics,
+	# 		"wikipedia_summary": wikipedia_summary,
+	# 		"region_interest": region_interest,
+	# 		"top_news": top_news,
+	# 		"countries": pycountry.countries,
+	# 		"current_country": location,
+	# 		"current_country_name": cur_country_name,
+	# 		"year_filter": year_filter,
+	# 		"timespan": timespan
+	# 	}
+	# 	app_json = json.dumps(response_data)
+	# 	return JsonResponse(app_json)
+	# except:
+	# 	raise SuspiciousOperation("Invalid request; incorrect parameters/headers supplied")
+
 
 @login_required
 def search_results(request, username, idtoken):
-
 	query_term = request.GET.get('q','')
-	location = request.GET.get('geo','US')
+	location = request.GET.get('geo','')
 	original_term = request.GET.get('originalTerm', '')
 	timespan = request.GET.get('timeperiod','')
 	print(query_term, location, original_term)
@@ -38,17 +118,15 @@ def search_results(request, username, idtoken):
 	start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1*365)
 	start = start_obj.strftime('%Y-%m-%d')
 	year_filter = start + " " + stop
+	query_term = ''
 	#get interest data
 	if query_term != '':
-		interest_data_all = fetch_interest_over_time(query_term, geo=location, timeframe='all')
 		interest_data_5y = fetch_interest_over_time(query_term,geo=location, timeframe='today 5-y')
-
-		interest_data_12m = fetch_interest_over_time(query_term,geo=location, timeframe=year_filter)
-		interest_data_1m = fetch_interest_over_time(query_term,geo=location, timeframe='today 1-m')
-		interest_data_7days = fetch_interest_over_time(query_term, geo=location, timeframe='now 7-d')
-
+		# interest_data_12m = fetch_interest_over_time(query_term,geo=location, timeframe=year_filter)
+		# interest_data_1m = fetch_interest_over_time(query_term,geo=location, timeframe='today 1-m')
 		#getting related queries
 		#if timespan is not defined default to 5 years
+
 		if timespan == '' or timespan == ' ':
 			timespan = "today 5-y"
 
@@ -58,15 +136,13 @@ def search_results(request, username, idtoken):
 		wikipedia_summary = get_wikipedia_summary(original_term)
 		top_news = get_top_news(original_term)
 	else:
-		interest_data_all, interest_data_5y, interest_data_1m, interest_data_12m, interest_data_7days = None, None, None
+		interest_data_5y, interest_data_1m, interest_data_12m = None, None, None
 		related_queries, related_topics, wikipedia_summary, region_interest, top_news = None, None, None, None, None
 
 	chart_data_dump = json.dumps({
-		"interest_data_all": interest_data_all,
-		"interest_data_5y":interest_data_5y,
-		"interest_data_12m": interest_data_12m,
-		"interest_data_1m": interest_data_1m,
-		"interest_data_7days": interest_data_7days
+		"interest_data":interest_data_5y,
+		# "interest_data_12m": interest_data_12m,
+		# "interest_data_1m": interest_data_1m
 	})
 	#loading current country name in server  - easier that way
 	cur_country_name = pycountry.countries.get(alpha_2=location)
@@ -82,7 +158,7 @@ def search_results(request, username, idtoken):
 		"username": username,
 		"chart_data":chart_data_dump,
 		"related_queries": related_queries,
-		"search_term_name":original_term,
+		"search_term_name": original_term,
 		"related_topics": related_topics,
 		"wikipedia_summary": wikipedia_summary,
 		"region_interest": region_interest,
@@ -91,7 +167,9 @@ def search_results(request, username, idtoken):
 		"current_country": location,
 		"current_country_name": cur_country_name,
 		"year_filter": year_filter,
-		"timespan": timespan
+		"timespan": timespan,
+		# "query_term": query_term,
+		"query_term": "hello",
 	}
 	return render(request, 'search_results.html', context)
 
@@ -143,7 +221,6 @@ def login(request):
 
 def recoverypassword(request):
 	return render(request, 'recovery-password.html')
-
 
 @login_required
 def settings(request, username, idtoken):
