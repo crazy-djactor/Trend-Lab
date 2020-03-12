@@ -1,24 +1,20 @@
 //show news articles on page load and other items
 $(document).ready(function(){
-    // showTopNews(1);
-    // showRegionInterest(1);
-    // showRelatedTopics(1);
-    // showRelatedQueries(1);
-
     const searchInput = document.querySelector('#trend-search-input');
 
-    searchInput.addEventListener('keyup', function(){
-        //query the api for search term suggestions
-        const searchTerm = searchInput.value;
-        if (searchTerm.length < 2){
-            //empty and hide parent div
-            $('#autocomplete-parent-div').empty();
-            $('#autocomplete-parent-div').hide();
-            return 0;
-        }
-        fetchGoogleTrendsSuggestion(searchTerm);
-    });
-
+    if ((typeof searchInput !== 'undefined') && (searchInput != null)){
+        searchInput.addEventListener('keyup', function(){
+            //query the api for search term suggestions
+            const searchTerm = searchInput.value;
+            if (searchTerm.length < 2){
+                //empty and hide parent div
+                $('#autocomplete-parent-div').empty();
+                $('#autocomplete-parent-div').hide();
+                return 0;
+            }
+            fetchGoogleTrendsSuggestion(searchTerm);
+        });
+    }
 
 //global variables storing location, timezone etc
     var tz = "0";
@@ -120,6 +116,7 @@ $(document).ready(function(){
         toggleTimePeriod(s_queryTerm, 'now 7-d');
     });
 
+
     function toggleTimePeriod(toggleQuery, timeframe){
         const url = window.location.origin + "/search/get_search_result/";
         let payload = {
@@ -132,17 +129,34 @@ $(document).ready(function(){
         // var dat = JSON.stringify(payload);
         // alert(dat)
 
+        $("#load_img").show();
         $.ajax({
             url : url,
             type : 'POST',
             data : payload,
             dataType:'json',
+
             success : function(data) {
-                alert(data)
-                plotInterestChart0(data.chart_interest_data, timeframe);
+                // alert(data.chart_data['date_values']);
+                relatedTopics = data.related_topics;
+                relatedQueries = data.related_queries;
+                chartData = data.chart_data;
+                newsStore = data.top_news;
+                regionInterest = data.region_interest;
+                timeSpan = data.timespan;
+                s_queryTerm  = data.query_term;
+                searchResTerm  = data.search_term_name;
+                $("#load_img").hide();
+                // plotInterestChart0(data.chart_data, timeframe);
+                plotInterestChart0(chartData, timeSpan)
+                showTopNews(1);
+                showRegionInterest(1);
+                showRelatedTopics(1);
+                showRelatedQueries(1);
             },
             error : function(request,error)
             {
+                $("#load_img").hide();
                 console.log(error);
             }
         });
@@ -276,7 +290,6 @@ $(document).ready(function(){
                 chart_time = {'unit': "day", 'unitStepSize': 1};
                 break;
         }
-        alert('plotInterestChart0')
         var myChart0 = new Chart(ctx0, {
             type: 'line',
             data: {
@@ -638,11 +651,11 @@ $(document).ready(function(){
         let newHtml = ``
         for (i of lst){
             let toAppend = `
-    <div class="clearfix post-recent">
-        <div class="post-recent-thumb float-left"> <a href="` + i['link']+`"> <img alt="img" src="`+ i['img']+`" class="img-fluid rounded"></a></div>
-        <div class="post-recent-content float-left"><a href="`+ i['link']+`">`+ i['title'] +`</a><span class="text-muted mt-2">`+ i['date'] +`</span></div>
-    </div>
-    `
+            <div class="clearfix post-recent">
+                <div class="post-recent-thumb float-left"> <a href="` + i['link']+`"> <img alt="img" src="`+ i['img']+`" class="img-fluid rounded"></a></div>
+                <div class="post-recent-content float-left"><a href="`+ i['link']+`">`+ i['title'] +`</a><span class="text-muted mt-2">`+ i['date'] +`</span></div>
+            </div>
+            `
             newHtml += toAppend
         }
         $('#news-items-div').append(newHtml);
@@ -662,14 +675,22 @@ $(document).ready(function(){
                 newHigh = 1;
             }
         }
-        let newNav = `<span onclick="showTopNews(`+ newLow +`)">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span onclick="showTopNews(`+ newHigh +`)">&#x25BA;</span>`
+
+        let newNav = `<span class="news_span" data-value="` + newLow + `">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span class="news_span" data-value="` + newHigh +`">&#x25BA;</span>`
+
         $('#news-items-nav').empty();
         $('#news-items-nav').append(newNav);
+
+        $('#news-items-nav').find("span").each(function(index) {
+            $(this).click(function() {
+                news_id = $(this).attr('data-value');
+                showTopNews(news_id)
+            })
+        });
     }
-    function showRegionInterest(timeframe, itemStart){
+    function showRegionInterest(itemStart){
         let low = itemStart -1;
         let high = low + 5;
-        regionInterest = regionInterests[timeframe]
         if (low > regionInterest.length){
             return 0;
         }else if(high > regionInterest.length){
@@ -687,15 +708,15 @@ $(document).ready(function(){
         let pos_counter = low;
         for (i of lst){
             let toAppend = `
-    <div class="progress-box mt-4">
-        <h6 class="title text-muted">`+pos_counter+`. `+ i[1]+`</h6>
-        <div class="progress">
-            <div class="progress-bar position-relative bg-primary" style="width:`+i[0]+`%;">
-                <div class="progress-value d-block text-muted h6">`+i[0]+`%</div>
+            <div class="progress-box mt-4">
+                <h6 class="title text-muted">`+pos_counter+`. `+ i[1]+`</h6>
+                <div class="progress">
+                    <div class="progress-bar position-relative bg-primary" style="width:`+i[0]+`%;">
+                        <div class="progress-value d-block text-muted h6">`+i[0]+`%</div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    `
+            `
             newHtml += toAppend;
             //increment counter
             pos_counter += 1;
@@ -717,9 +738,16 @@ $(document).ready(function(){
                 newHigh = 1;
             }
         }
-        let newNav = `<span onclick="showRegionInterest(`+ newLow +`)">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span onclick="showRegionInterest(`+ newHigh +`)">&#x25BA;</span>`
+        let newNav = `<span class="interest_span" data-value="` + newLow + `">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span class="interest_span" data-value="`+ newHigh +`">&#x25BA;</span>`
         $('#top-regions-nav').empty();
         $('#top-regions-nav').append(newNav);
+
+        $('#top-regions-nav').find("span").each(function(index) {
+            $(this).click(function() {
+                let spanValue = $(this).attr("data-value");
+                showRegionInterest(spanValue);
+                });
+        });
     }
 
 //function for showing related topics
@@ -727,7 +755,6 @@ $(document).ready(function(){
         let low = itemStart -1;
         let high = low + 3;
 
-        relatedTopics = relatedTopics_s[current_timeFrame]
         if (low > relatedTopics.length){
             return 0;
         }else if(high > relatedTopics.length){
@@ -745,12 +772,12 @@ $(document).ready(function(){
         let pos_counter = low;
         for (i of lst){
             let toAppend = `
-      <tr>
-          <th scope="row">`+pos_counter+`</th>
-          <td>`+i[5]+` - `+i[6]+`</td>
-          <td>`+i[1]+`</td>
-      </tr>
-    `
+              <tr>
+                  <th scope="row">`+pos_counter+`</th>
+                  <td>`+i[5]+` - `+i[6]+`</td>
+                  <td>`+i[1]+`</td>
+              </tr>
+            `
             newHtml += toAppend;
             //increment counter
             pos_counter += 1;
@@ -772,16 +799,23 @@ $(document).ready(function(){
                 newHigh = 1;
             }
         }
-        let newNav = `<span onclick="showRelatedTopics(`+ newLow +`)">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span onclick="showRelatedTopics(`+ newHigh +`)">&#x25BA;</span>`
+        let newNav = `<span class="relatedtopic_span" data-value="` + newLow + `">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span class="relatedtopic_span" data-value="` + newHigh + `">&#x25BA;</span>`
+
         $('#related-topic-nav').empty();
         $('#related-topic-nav').append(newNav);
+
+        $('#related-topic-nav').find("span").each(function(index) {
+            $(this).click(function() {
+                let spanValue = $(this).attr()
+                showRelatedTopics(spanValue);
+            });
+        });
     }
 
 //show related queries for this part
-    function showRelatedQueries(timeframe, itemStart){
+    function showRelatedQueries(itemStart){
         let low = itemStart -1;
         let high = low + 3;
-        relatedQueries = relatedQueries_s[timeframe];
         if (low > relatedQueries.length){
             return 0;
         }else if(high > relatedQueries.length){
@@ -799,12 +833,12 @@ $(document).ready(function(){
         let pos_counter = low;
         for (i of lst){
             let toAppend = `
-    <tr>
-        <th scope="row">`+pos_counter+`</th>
-        <td>`+i[0]+`</td>
-        <td>`+i[1]+`</td>
-    </tr>
-    `
+            <tr>
+                <th scope="row">`+pos_counter+`</th>
+                <td>`+i[0]+`</td>
+                <td>`+i[1]+`</td>
+            </tr>
+            `
 
             newHtml += toAppend;
             //increment counter
@@ -827,15 +861,26 @@ $(document).ready(function(){
                 newHigh = 1;
             }
         }
-        let newNav = `<span onclick="showRelatedQueries(`+ newLow +`)">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span onclick="showRelatedQueries(`+ newHigh +`)">&#x25BA;</span>`
+        let newNav = `<span class="relatedqueries_span" data-value="`+ newLow + `">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span class="relatedqueries_span" data-value="`+ newHigh + `">&#x25BA;</span>`
         $('#related-queries-nav').empty();
         $('#related-queries-nav').append(newNav);
+
+        $("#related-queries-nav").find("span").each(function(index) {
+            $(this).click(function() {
+                let spanValue = $(this).attr('data-value');
+                showRelatedQueries(spanValue);
+            })
+        });
     }
 
 
     if ((typeof timeSpan !== 'undefined') && (timeSpan !== '')){
-        alert('document ready ' + timeSpan);
+        // alert('document ready ' + timeSpan);
         plotInterestChart0(chartData, timeSpan)
+        showTopNews(1);
+        showRegionInterest(1);
+        showRelatedTopics(1);
+        showRelatedQueries(1);
     }
 
 });

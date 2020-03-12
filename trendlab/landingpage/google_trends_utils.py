@@ -5,14 +5,14 @@ from scipy import signal
 import json
 
 
-def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y'):
+def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y',proxies=''):
     """
     Gets data for interest over time
     Args:
         term(str): The search term
         geo(str): The location
     """
-    pytrends = TrendReq(hl='en-US', tz=0)
+    pytrends = TrendReq(hl='en-US', tz=0, proxies=proxies)
 
     kw_list = [term]
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
