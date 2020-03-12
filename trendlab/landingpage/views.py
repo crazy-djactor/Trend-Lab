@@ -59,10 +59,13 @@ def get_search_result(request):
     print(s_query_term, location, original_term)
     # return JsonResponse(response_data)
     # prep datetime strings for now and 1 year ago
-    # stop = datetime.datetime.utcnow().strftime('%Y-%m-%d')
-    # start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1 * 365)
-    # start = start_obj.strftime('%Y-%m-%d')
-    # year_filter = start + " " + stop
+    year_filter = ''
+    if timespan == 'yearfilter' :
+        stop = datetime.datetime.utcnow().strftime('%Y-%m-%d')
+        start_obj = datetime.datetime.utcnow() - datetime.timedelta(days=1 * 365)
+        start = start_obj.strftime('%Y-%m-%d')
+        year_filter = start + " " + stop
+        timespan = year_filter
     # # get interest data
     try:
         if s_query_term != '':
@@ -113,6 +116,7 @@ def get_search_result(request):
             "current_country": location,
             "current_country_name": cur_country_name,
             "timespan": timespan,
+            "yearfilter": year_filter,
         }
         return JsonResponse(response_data)
     except (RuntimeError, TypeError, NameError):
@@ -133,16 +137,16 @@ def search_results(request, username, idtoken):
         if timespan == '' or timespan == ' ':
             timespan = "today 5-y"
         chart_interest_data, session_trends = fetch_interest_over_time(term=query_term, geo=location, timeframe=timespan)
-        # time.sleep(1)
+        time.sleep(1)
         related_queries = get_related_queries(sessiontrend=session_trends, term=query_term, geo=location,
                                               timeframe=timespan)
-        # time.sleep(1)
+        time.sleep(1)
         related_topics = get_related_topics(sessiontrend=session_trends, term=query_term, geo=location,
                                             timeframe=timespan)
-        # time.sleep(1)
+        time.sleep(1)
         region_interest = get_interest_by_region(sessiontrend=session_trends, term=query_term, geo=location,
                                                  timeframe=timespan)
-        # time.sleep(1)
+        time.sleep(1)
         wiki_summary = get_wikipedia_summary(original_term)
         top_news = get_top_news(original_term)
     else:

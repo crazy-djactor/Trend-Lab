@@ -137,7 +137,7 @@ $(document).ready(function(){
             dataType:'json',
 
             success : function(data) {
-                // alert(data.chart_data['date_values']);
+                alert(data.related_topics);
                 relatedTopics = data.related_topics;
                 relatedQueries = data.related_queries;
                 chartData = data.chart_data;
@@ -587,6 +587,13 @@ $(document).ready(function(){
         y_pos = (y-600)/2 ;
         window.open(url, 'auth-window','height=500,width=450, top='+ y_pos +', left='+x_pos);
     }
+
+
+
+    $( "#signin_google" ).click(function () {
+        launchGoogleSigninPopup();
+    });
+
 
 
 //lazy load disambig descriptions
