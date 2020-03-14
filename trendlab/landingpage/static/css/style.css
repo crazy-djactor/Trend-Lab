@@ -3512,7 +3512,10 @@ hr {
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
   border-radius: 50%;
+  position: fixed;
   width: 120px;
+  left: 50%;
+  top: 50%;
   height: 120px;
   animation: spin_loader 2s linear infinite;
 }
@@ -3522,21 +3525,3 @@ hr {
   100% { transform: rotate(360deg); }
 }
 
-.busy
-{
-    position: fixed;
-    left: 50%;
-    top: 35%;
-    display: none;
-    background: transparent url("../images/350.gif");
-    z-index: 1000;
-    /*height: 31px;*/
-    /*width: 31px;*/
-}
-
-.busy-holder
-{
-    background: transparent;
-    width: 100%;
-    height: 100%;
-}

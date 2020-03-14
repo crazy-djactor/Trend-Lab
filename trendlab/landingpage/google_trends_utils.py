@@ -12,7 +12,7 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y',proxies=''):
         term(str): The search term
         geo(str): The location
     """
-    pytrends = TrendReq(hl='en-US', tz=0, proxies=proxies)
+    pytrends = TrendReq(hl='en-US', tz=0)
 
     kw_list = [term]
     pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
@@ -47,12 +47,12 @@ def get_related_queries(sessiontrend=None, term='', geo='GB', timeframe='today 5
     related_queries = pytrends.related_queries()
     #print(related_queries)
     try:
-        if 0 < len(related_queries[term]['top'].index) <= 3:
-            related_queries = related_queries[term]['top'].values.tolist()
-        elif len(related_queries[term]['top'].index) == 0:
+        if 0 < len(related_queries[term]['rising'].index) <= 3:
+            related_queries = related_queries[term]['rising'].values.tolist()
+        elif len(related_queries[term]['rising'].index) == 0:
             related_queries = []
         else:
-            related_queries = related_queries[term]['top'].values.tolist()
+            related_queries = related_queries[term]['rising'].values.tolist()
     except:
         related_queries = []
 
@@ -70,7 +70,7 @@ def get_related_topics(sessiontrend=None, term='', geo='GB', timeframe='today 5-
         pytrends = sessiontrend
 
     related_topics = pytrends.related_topics()
-    related_topics = related_topics[term]['top'].values.tolist()
+    related_topics = related_topics[term]['rising'].values.tolist()
     #print(len(related_topics), related_topics)
     # return related_topics
     return json.dumps(related_topics)

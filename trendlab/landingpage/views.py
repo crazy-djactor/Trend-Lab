@@ -116,7 +116,7 @@ def get_search_result(request):
             "wikipedia_summary": wiki_summary,
             "region_interest": region_interest,
             "top_news": top_news,
-            # "countries": list(pycountry.countries),
+            "countries": list(pycountry.countries),
             "current_country": location,
             "current_country_name": cur_country_name,
             "timespan": timespan,
@@ -139,6 +139,7 @@ def search_results(request, username, idtoken):
     # get interest data
     if query_term != '':
         if timespan == '' or timespan == ' ':
+
             timespan = "today 5-y"
         chart_interest_data, session_trends = fetch_interest_over_time(term=query_term, geo=location, timeframe=timespan)
         time.sleep(1)
@@ -177,7 +178,7 @@ def search_results(request, username, idtoken):
         "wikipedia_summary": wiki_summary,
         "region_interest": region_interest,
         "top_news": top_news,
-        # "countries": list(pycountry.countries),
+        "countries": list(pycountry.countries),
         "current_country": location,
         "current_country_name": cur_country_name,
         "timespan": timespan,

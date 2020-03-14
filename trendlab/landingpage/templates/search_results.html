@@ -21,7 +21,7 @@
                                 <div class="text-center subcribe-form pt-5 pb-5 pt-md-3 pb-md-3 aos-init aos-animate" data-aos="fade-up" data-aos-duration="1800" style="position:relative;">
                                     <form autocomplete="off" id="search-form">
                                         <div class="form-group mb-0">
-                                          <input id="trend-search-input" class="shadow bg-white rounded-pill" required="" placeholder="Enter a search term or a topic">
+                                          <input id="trend-search-input" class="shadow bg-white rounded-pill" required="" type="text" placeholder="Enter a search term or a topic">
                                           <!-- <input type="email" id="email" name="email" class="shadow bg-white rounded-pill" required="" placeholder="Enter a search term or a topic"> -->
                                           <button class="btn btn-primary rounded-pill search-text-btn">Search</button>
                                         </div>
@@ -82,16 +82,16 @@
                            Worldwide
                            {% endif %}
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="max-height:200px;overflow-y:scroll;">
+                        <div class="dropdown-menu" id="dropdown_local" aria-labelledby="dropdownMenuButton" style="max-height:200px;overflow-y:scroll;">
                           {% if current_country != '' %}
-                            <a class="dropdown-item" href="#" onclick="switchTrendLocale('')">Worldwide</a>
+                            <a class="dropdown-item" href="#" data-country=''>Worldwide</a>
                           {% endif %}
                           {% if countries %}
                           {% for country in countries %}
-                            <a class="dropdown-item" href="#" onclick="switchTrendLocale('{{country.alpha_2}}')">{{country.name}}</a>
+                            <a class="dropdown-item" href="#" data-country='{{country.alpha_2}}'>{{country.name}}</a>
                           {% endfor %}
                           {% else %}
-                          <a class="dropdown-item" href="#" onclick="switchTrendLocale('')">Worldwide</a>
+                          <a class="dropdown-item" href="#" data-country=''>Worldwide</a>
                           {% endif %}
                         </div>
                     </div>
@@ -146,8 +146,8 @@
                         <div class="row pt-2">
                             <div class="col-12">
 {#                                <img id="load_img" src="{% static 'images/350.gif' %}" class="center">#}
-                                <div class="busy busy-holder" id="load_img"></div>
-                                <div class="tab-content" id="pills-tabContent">
+                                <div class="loader" id="load_img"></div>
+                                <div class="tab-content" id="timeSpan-tabContent">
                                     <div class="tab-pane fade {% if timespan == 'all' %}show active{% endif %}" id="interest-all" role="tabpanel" aria-labelledby="interest-all-tab">
                                         <div class="col-12 text-center" style="position: relative; height:40vh; width:80vw">
                                             <canvas id="allinterest"></canvas>

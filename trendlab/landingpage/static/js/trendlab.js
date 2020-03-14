@@ -1,36 +1,79 @@
 //show news articles on page load and other items
 $(document).ready(function(){
+
+    let searchInputtimerId;
     const searchInput = document.querySelector('#trend-search-input');
+    // Throttle function: Input as function which needs to be throttled and delay is the time interval in milliseconds
+    const throttleFunction = function (func, delay) {
+        // If setTimeout is already scheduled, no need to do anything
+        if (searchInputtimerId) {
+            return
+        }
+        // Schedule a setTimeout after delay seconds
+        searchInputtimerId = setTimeout(function () {
+            func()
+            // Once setTimeout function execution is finished, timerId = undefined so that in <br>
+            // the next scroll event function execution can be scheduled by the setTimeout
+            searchInputtimerId = undefined;
+        }, delay)
+    };
+
+    // Debounce function: Input as function which needs to be debounced and delay is the debounced time in milliseconds
+    const debounceFunction = function (func, delay) {
+        // Cancels the setTimeout method execution
+        clearTimeout(searchInputtimerId)
+
+        // Executes the func after delay time.
+        searchInputtimerId = setTimeout(func, delay)
+    };
+
+    function sendRequestTrendsSuggestion(){
+        const searchTerm = searchInput.value;
+        if (searchTerm.length < 2){
+            //empty and hide parent div
+            var autocomplete_parent_div = $('#autocomplete-parent-div');
+            autocomplete_parent_div.empty();
+            autocomplete_parent_div.hide();
+            return 0;
+        }
+        fetchGoogleTrendsSuggestion(searchTerm);
+    }
+
+
+    // $('#trend-search-input').change(function(){
+    //     throttleFunction(sendRequestTrendsSuggestion, 100)
+    //     // sendRequestTrendsSuggestion();
+    // });
+
+    // $('#trend-search-input').addEventListener('keyup', function(){
+    //     throttleFunction(sendRequestTrendsSuggestion, 200);
+    // })
 
     if ((typeof searchInput !== 'undefined') && (searchInput != null)){
-        searchInput.addEventListener('keyup', function(){
+        searchInput.addEventListener('input', function(){
             //query the api for search term suggestions
-            const searchTerm = searchInput.value;
-            if (searchTerm.length < 2){
-                //empty and hide parent div
-                $('#autocomplete-parent-div').empty();
-                $('#autocomplete-parent-div').hide();
-                return 0;
-            }
-            fetchGoogleTrendsSuggestion(searchTerm);
+            // throttleFunction(sendRequestTrendsSuggestion, 200);
+            debounceFunction(sendRequestTrendsSuggestion, 100);
         });
     }
 
 //global variables storing location, timezone etc
-    var tz = "0";
-    var lang =  "en-GB";
-    var geo = " ";
+    const tz = "0";
+    const lang = "en-GB";
+    let geo = " ";
+
 //set geo programmatically
     function setGeo(){
         let url = window.location.href
         let urlParamStrings = url.split("?")
+        let urlParamString = '';
         if (urlParamStrings.length > 2){
             //join them
-            var urlParamString = urlParamStrings.slice(1,).join("");
+            urlParamString = urlParamStrings.slice(1,).join("");
         }else{
-            var urlParamString = urlParamStrings[1];
+            urlParamString = urlParamStrings[1];
         }
-        searchParams = new URLSearchParams(urlParamString);
+        let searchParams = new URLSearchParams(urlParamString);
 
         if (searchParams.has('geo')){
             geo = searchParams.get('geo');
@@ -41,14 +84,41 @@ $(document).ready(function(){
     setGeo();
 
 
+    // function fetchGoogleTrendsSuggestion(searchTerm){
+    //     //call api
+    //     const url = window.location.origin + "search/autocomplete/" + searchTerm;
+    //     let payload = {
+    //         'hl' : lang,
+    //         'tz': tz,
+    //         'term':searchTerm
+    //     }
+    //
+    //     $.ajax({
+    //         url : document.location.origin + '/search/autocomplete/',
+    //         type : 'POST',
+    //         data : JSON.stringify(payload),
+    //         contentType:'application/json',
+    //         success : function(data) {
+    //             updateSuggestionDiv(data['default'][['topics']], searchTerm);
+    //         },
+    //         error : function(request,error)
+    //         {
+    //             console.log(error)
+    //             updateSuggestionDiv([], searchTerm);
+    //         }
+    //     });
+    //
+    // }
+
     function fetchGoogleTrendsSuggestion(searchTerm){
         //call api
-        const url = window.location.origin + "search/autocomplete/" + searchTerm;
+        const url =  + searchTerm;
         let payload = {
             'hl' : lang,
             'tz': tz,
             'term':searchTerm
         }
+
         $.ajax({
             url : document.location.origin + '/search/autocomplete/',
             type : 'POST',
@@ -66,18 +136,19 @@ $(document).ready(function(){
 
     }
 
+
 //switching location --geo
     function switchTrendLocale(newLocale){
         let url = window.location.href
         let urlParamStrings = url.split("?")
-        var urlParamString = ""
+        let urlParamString = "";
         if (urlParamStrings.length > 2){
             //join them
             urlParamString = urlParamStrings.slice(1,).join("");
         }else{
             urlParamString = urlParamStrings[1];
         }
-        searchParams = new URLSearchParams(urlParamString);
+        let searchParams = new URLSearchParams(urlParamString);
         if (newLocale === ' '){
             //remove any geo params since its worldwide
             if (searchParams.has("geo")){
@@ -91,12 +162,19 @@ $(document).ready(function(){
                 searchParams.append("geo", newLocale);
             }
         }
-        new_params = searchParams.toString();
-        new_url = urlParamStrings[0] + "?" +new_params;
-        window.location.href = new_url;
+        let new_params = searchParams.toString();
+        window.location.href = urlParamStrings[0] + "?" + new_params;
     }
 
-    var current_timeFrame = 1;
+    $("#dropdown_local").find("a").each(function(index){
+        $(this).click(function() {
+            const data_country = $(this).attr('data-country');
+            switchTrendLocale(data_country);
+        })
+
+    });
+
+    let current_timeFrame = 1;
 //function to toggle the time periods btn 5 yrs, 1 year and 30 days
     $( "#toggle_interest_all" ).click(function() {
         toggleTimePeriod(s_queryTerm, 'all');
@@ -188,9 +266,10 @@ $(document).ready(function(){
     function updateSuggestionDiv(suggestions, searchTerm){
         //with search terms, dom manipulation to insert suggestions with links.
         //if empty, hide parent div too
-        $('#autocomplete-parent-div').empty();
-        if (suggestions.length == 0){
-            $('#autocomplete-parent-div').hide();
+        var autocomplete_parent_div = $('#autocomplete-parent-div');
+        autocomplete_parent_div.empty();
+        if (suggestions.length === 0){
+            autocomplete_parent_div.hide();
         }else{
             //first append the search term itself
             let childDiv = `
@@ -203,7 +282,7 @@ $(document).ready(function(){
                   <span class="autocomplete-term-topic">Search term</span>
                 </div>
             `
-            $('#autocomplete-parent-div').append(childDiv);
+            autocomplete_parent_div.append(childDiv);
             suggestions.forEach(function(suggestion){
                 let childDiv = `
                     <div class="autocomplete-element"
@@ -215,9 +294,9 @@ $(document).ready(function(){
                         <span class="autocomplete-term-topic">`+ suggestion['type'] +`</span>
                     </div>
                     `
-                $('#autocomplete-parent-div').append(childDiv);
+                autocomplete_parent_div.append(childDiv);
             });
-            $('#autocomplete-parent-div').show();
+            autocomplete_parent_div.show();
         }
 
         $(".autocomplete-element").each(function(index) {
@@ -620,8 +699,9 @@ $(document).ready(function(){
 
     $(document).ready(function(){
         //loop through disambig items if present
-        if ($('#disambig-items').length > 0){
-            $('#disambig-items').children().each(function(){
+        var disambig_items = $('#disambig-items');
+        if (disambig_items.length > 0){
+            disambig_items.children().each(function(){
                 let obj_cache = $(this);
                 let term = $(this).children().first().text();
                 fetchWikipediaSummary(term, obj_cache);
@@ -630,7 +710,7 @@ $(document).ready(function(){
     });
 
     function showItemSummary(obj){
-        if (obj.children[1].style.display == "none"){
+        if (obj.children[1].style.display === "none"){
             obj.children[1].style.display = 'block';
         }
         else{
@@ -641,7 +721,7 @@ $(document).ready(function(){
 
     function showTopNews(itemStart){
         let low = itemStart -1;
-        let high = low + 3;
+        let high = low + 5;
         if (low > newsStore.length){
             return 0;
         }else if(high > newsStore.length){
@@ -654,7 +734,8 @@ $(document).ready(function(){
     }
     function renderTopNews(lst, low, high, total){
         //empty the div first
-        $('#news-items-div').empty();
+        var div_news_item = $('#news-items-div');
+        div_news_item.empty();
         let newHtml = ``
         for (i of lst){
             let toAppend = `
@@ -665,7 +746,7 @@ $(document).ready(function(){
             `
             newHtml += toAppend
         }
-        $('#news-items-div').append(newHtml);
+        div_news_item.append(newHtml);
 
         //update the nav buttons
         let newLow = 1;
@@ -684,13 +765,14 @@ $(document).ready(function(){
         }
 
         let newNav = `<span class="news_span" data-value="` + newLow + `">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span class="news_span" data-value="` + newHigh +`">&#x25BA;</span>`
+        var news_items_nav = $('#news-items-nav');
 
-        $('#news-items-nav').empty();
-        $('#news-items-nav').append(newNav);
+        news_items_nav.empty();
+        news_items_nav.append(newNav);
 
-        $('#news-items-nav').find("span").each(function(index) {
+        news_items_nav.find("span").each(function(index) {
             $(this).click(function() {
-                news_id = $(this).attr('data-value');
+                let news_id = $(this).attr('data-value');
                 showTopNews(news_id)
             })
         });
@@ -710,7 +792,8 @@ $(document).ready(function(){
     }
     function renderTopInterestRegions(lst, low, high, total){
         //empty the div first
-        $('#region-interest-div').empty();
+        var region_interest_div = $('#region-interest-div');
+        region_interest_div.empty();
         let newHtml = ``;
         let pos_counter = low;
         for (i of lst){
@@ -728,7 +811,7 @@ $(document).ready(function(){
             //increment counter
             pos_counter += 1;
         }
-        $('#region-interest-div').append(newHtml);
+        region_interest_div.append(newHtml);
 
         //update the nav buttons
         let newLow = 1;
@@ -746,10 +829,11 @@ $(document).ready(function(){
             }
         }
         let newNav = `<span class="interest_span" data-value="` + newLow + `">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span class="interest_span" data-value="`+ newHigh +`">&#x25BA;</span>`
-        $('#top-regions-nav').empty();
-        $('#top-regions-nav').append(newNav);
+        const top_regions_nav = $('#top-regions-nav');
+        top_regions_nav.empty();
+        top_regions_nav.append(newNav);
 
-        $('#top-regions-nav').find("span").each(function(index) {
+        top_regions_nav.find("span").each(function(index) {
             $(this).click(function() {
                 let spanValue = $(this).attr("data-value");
                 showRegionInterest(spanValue);
@@ -760,7 +844,7 @@ $(document).ready(function(){
 //function for showing related topics
     function showRelatedTopics(itemStart){
         let low = itemStart -1;
-        let high = low + 3;
+        let high = low + 5;
 
         if (low > relatedTopics.length){
             return 0;
@@ -774,14 +858,15 @@ $(document).ready(function(){
     }
     function renderRelatedTopics(lst, low, high, total){
         //empty the div first
-        $('#related-topic-tbody').empty();
+        var related_topic_tbody = $('#related-topic-tbody');
+        related_topic_tbody.empty();
         let newHtml = ``;
         let pos_counter = low;
         for (i of lst){
             let toAppend = `
               <tr>
                   <th scope="row">`+pos_counter+`</th>
-                  <td>`+i[5]+` - `+i[6]+`</td>
+                  <td>`+i[4]+` - `+i[5]+`</td>
                   <td>`+i[1]+`</td>
               </tr>
             `
@@ -789,13 +874,13 @@ $(document).ready(function(){
             //increment counter
             pos_counter += 1;
         }
-        $('#related-topic-tbody').append(newHtml);
+        related_topic_tbody.append(newHtml);
 
         //update the nav buttons
         let newLow = 1;
         let newHigh = total;
         if (low > 1){
-            newLow = low - 3;
+            newLow = low - 5;
             if(newLow < 1){
                 newLow = 1
             }
@@ -807,11 +892,11 @@ $(document).ready(function(){
             }
         }
         let newNav = `<span class="relatedtopic_span" data-value="` + newLow + `">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span class="relatedtopic_span" data-value="` + newHigh + `">&#x25BA;</span>`
+        var related_topic_nav = $('#related-topic-nav');
+        related_topic_nav.empty();
+        related_topic_nav.append(newNav);
 
-        $('#related-topic-nav').empty();
-        $('#related-topic-nav').append(newNav);
-
-        $('#related-topic-nav').find("span").each(function(index) {
+        related_topic_nav.find("span").each(function(index) {
             $(this).click(function() {
                 let spanValue = $(this).attr('data-value')
                 showRelatedTopics(spanValue);
@@ -822,7 +907,7 @@ $(document).ready(function(){
 //show related queries for this part
     function showRelatedQueries(itemStart){
         let low = itemStart -1;
-        let high = low + 3;
+        let high = low + 5;
         if (low > relatedQueries.length){
             return 0;
         }else if(high > relatedQueries.length){
@@ -835,7 +920,8 @@ $(document).ready(function(){
     }
     function renderRelatedQueries(lst, low, high, total){
         //empty the div first
-        $('#related-queries-tbody').empty();
+        var related_queries_tbody = $('#related-queries-tbody');
+        related_queries_tbody.empty();
         let newHtml = ``;
         let pos_counter = low;
         for (i of lst){
@@ -851,28 +937,29 @@ $(document).ready(function(){
             //increment counter
             pos_counter += 1;
         }
-        $('#related-queries-tbody').append(newHtml);
+        related_queries_tbody.append(newHtml);
 
         //update the nav buttons
         let newLow = 1;
         let newHigh = total;
         if (low > 1){
-            newLow = low - 3;
+            newLow = low - 5;
             if(newLow < 1){
                 newLow = 1
             }
         }
         if (high <= total){
-            newHigh = high+1
+            newHigh = high+1;
             if (newHigh > total){
                 newHigh = 1;
             }
         }
         let newNav = `<span class="relatedqueries_span" data-value="`+ newLow + `">&#x25C4;</span>   Showing `+low+`-`+high+` of `+total+` News <span class="relatedqueries_span" data-value="`+ newHigh + `">&#x25BA;</span>`
-        $('#related-queries-nav').empty();
-        $('#related-queries-nav').append(newNav);
 
-        $("#related-queries-nav").find("span").each(function(index) {
+        const related_queries_nav = $('#related-queries-nav');
+        related_queries_nav.empty()
+        related_queries_nav.append(newNav);
+        related_queries_nav.find("span").each(function(index) {
             $(this).click(function() {
                 let spanValue = $(this).attr('data-value');
                 showRelatedQueries(spanValue);
