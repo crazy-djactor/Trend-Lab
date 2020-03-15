@@ -739,14 +739,15 @@ $(document).ready(function(){
         //empty the div first
         var div_news_item = $('#news-items-div');
         div_news_item.empty();
-        let newHtml = ``
+        let newHtml = ``;
+        let i;
         for (i of lst){
             let toAppend = `
             <div class="clearfix post-recent">
                 <div class="post-recent-thumb float-left"> <a href="` + i['link']+`"> <img alt="img" src="`+ i['img']+`" class="img-fluid rounded"></a></div>
                 <div class="post-recent-content float-left"><a href="`+ i['link']+`">`+ i['title'] +`</a><span class="text-muted mt-2">`+ i['date'] +`</span></div>
             </div>
-            `
+            `;
             newHtml += toAppend
         }
         div_news_item.append(newHtml);
