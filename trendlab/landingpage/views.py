@@ -81,7 +81,6 @@ def get_search_result(request):
                 time_frame = timespan
             chart_interest_data, session_trends = fetch_interest_over_time(term=s_query_term, geo=location,
                                                                                timeframe=time_frame)
-
             time.sleep(1)
             related_queries = get_related_queries(sessiontrend=session_trends, term=s_query_term, geo=location,
                                                   timeframe=time_frame)
@@ -139,8 +138,8 @@ def search_results(request, username, idtoken):
     # get interest data
     if query_term != '':
         if timespan == '' or timespan == ' ':
-
             timespan = "today 5-y"
+
         chart_interest_data, session_trends = fetch_interest_over_time(term=query_term, geo=location, timeframe=timespan)
         time.sleep(1)
         related_queries = get_related_queries(sessiontrend=session_trends, term=query_term, geo=location,

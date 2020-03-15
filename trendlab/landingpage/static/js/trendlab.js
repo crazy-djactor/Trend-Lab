@@ -224,13 +224,16 @@ $(document).ready(function(){
                 timeSpan = data.timespan;
                 s_queryTerm  = data.query_term;
                 searchResTerm  = data.search_term_name;
-                $("#load_img").hide();
+
                 // plotInterestChart0(data.chart_data, timeframe);
                 plotInterestChart0(chartData, timeSpan)
                 showTopNews(1);
                 showRegionInterest(1);
                 showRelatedTopics(1);
                 showRelatedQueries(1);
+            },
+            complete:function(data){
+                $("#load_img").hide();
             },
             error : function(request,error)
             {
@@ -752,7 +755,7 @@ $(document).ready(function(){
         let newLow = 1;
         let newHigh = total;
         if (low > 1){
-            newLow = low - 3;
+            newLow = low - 5;
             if(newLow < 1){
                 newLow = 1
             }

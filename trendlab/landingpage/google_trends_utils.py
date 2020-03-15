@@ -12,13 +12,14 @@ def fetch_interest_over_time(term, geo='GB', timeframe='today 5-y',proxies=''):
         term(str): The search term
         geo(str): The location
     """
-    pytrends = TrendReq(hl='en-US', tz=0)
-
-    kw_list = [term]
-    pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
-    interest_dataframe = pytrends.interest_over_time()
-
+    pytrends = None
     try:
+        pytrends = TrendReq(hl='en-US', tz=0)
+
+        kw_list = [term]
+        pytrends.build_payload(kw_list, cat=0, timeframe=timeframe, geo=geo, gprop='')
+        interest_dataframe = pytrends.interest_over_time()
+
         interest_values = list(interest_dataframe[term])
         date_values_d64 = list(interest_dataframe.index.values)
         date_values = []
