@@ -620,6 +620,7 @@
             let s_queryTerm  = "{{ query_term | safe }}";
             let searchResTerm  = "{{ search_term_name | safe }}";
             let year_filter = '{{year_filter}}';
+            let geolocation = '{{ current_country }}';
             {#var relatedTopics = null;#}
             {#if ("{{ related_topics |safe }}" !== 'None') {#}
             {#    relatedTopics = {{ related_topics |safe }};#}

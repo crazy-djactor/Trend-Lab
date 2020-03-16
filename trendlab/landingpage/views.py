@@ -46,7 +46,7 @@ def get_search_result(request):
     if request.POST.get('geo') is not None and request.POST.get('geo') != '':
         location = request.POST.get('geo')
     else:
-        location = 'US'
+        location = ''
     if request.POST.get('originalTerm') is not None and request.POST.get('originalTerm') != '':
         original_term = request.POST.get('originalTerm')
     else:
@@ -54,7 +54,7 @@ def get_search_result(request):
     if request.POST.get('timeperiod') is not None and request.POST.get('timeperiod') != '':
         timespan = request.POST.get('timeperiod')
     else:
-        timespan = ''
+        timespan = 'timespan = "today 5-y"'
 
     print(s_query_term, location, original_term)
     # return JsonResponse(response_data)

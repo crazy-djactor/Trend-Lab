@@ -81,7 +81,7 @@ $(document).ready(function(){
             geo = " ";
         }
     }
-    setGeo();
+    // setGeo();
 
 
     // function fetchGoogleTrendsSuggestion(searchTerm){
@@ -149,7 +149,7 @@ $(document).ready(function(){
             urlParamString = urlParamStrings[1];
         }
         let searchParams = new URLSearchParams(urlParamString);
-        if (newLocale === ' '){
+        if (newLocale === ''){
             //remove any geo params since its worldwide
             if (searchParams.has("geo")){
                 searchParams.delete("geo");
@@ -164,6 +164,8 @@ $(document).ready(function(){
         }
         let new_params = searchParams.toString();
         window.location.href = urlParamStrings[0] + "?" + new_params;
+        // geolocation
+
     }
 
     $("#dropdown_local").find("a").each(function(index){
@@ -200,7 +202,7 @@ $(document).ready(function(){
         let payload = {
             'q' : toggleQuery,
             'originalTerm': searchResTerm,
-            'geo': 'US',
+            'geo': geolocation,
             'timeperiod': timeframe
         }
 
@@ -746,7 +748,7 @@ $(document).ready(function(){
             <div class="clearfix post-recent">
                 <div class="post-recent-thumb float-left"> <a href="` + i['link']+`"> <img alt="img" src="`+ i['img']+`" class="img-fluid rounded"></a></div>
                 <div class="post-recent-content float-left"><a href="`+ i['link']+`">`+ i['title'] +`</a><span class="text-muted mt-2">`+ i['date'] +`</span></div>
-            </div>
+            </div>  
             `;
             newHtml += toAppend
         }
