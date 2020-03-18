@@ -5,8 +5,8 @@ import json
 def get_top_news(term, limit=5):
     googlenews = GoogleNews()
     googlenews.search(term)
-    googlenews.setlang('en')
-    googlenews.setperiod('d')
+    # googlenews.setlang('en')
+    # googlenews.setperiod('d')
     result = googlenews.result()
     try:
         result = result
