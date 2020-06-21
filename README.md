@@ -10,3 +10,5 @@ python manage.py runserver --settings=TrendLab.settings.dev
 2. Redirect user to correct site after signup
 3. Confirm email to have any user registering
 4. Input search and get result.
+
+[Screenshot 1](crazy-djactor.github.com/Trend-Lab/Screenshot1.png)
