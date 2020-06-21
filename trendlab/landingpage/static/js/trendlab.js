@@ -666,7 +666,7 @@ $(document).ready(function(){
         url = "https://trend-lab.auth.us-east-1.amazoncognito.com/login?client_id=6cb6cboefcl1a2santkqo042tk&response_type=token&scope=email+openid+profile&redirect_uri="+ document.location.origin +"/google-login-oauth-callback";
         //dimension getting to center the popup
         x = window.innerWidth || document.documentElement.clientWidth;
-        y = window.innerHeight|| documentElememt.clientHeight;
+        y = window.innerHeight|| document.documentElement.clientHeight;
         x_pos = (x-450)/2 ;
         y_pos = (y-600)/2 ;
         window.open(url, 'auth-window','height=500,width=450, top='+ y_pos +', left='+x_pos);

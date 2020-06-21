@@ -127,8 +127,8 @@ def get_search_result(request):
     #     raise SuspiciousOperation("Invalid request; incorrect parameters/headers supplied")
 
 
-@login_required
-def search_results(request, username, idtoken):
+# @login_required
+def search_results(request): #, username, idtoken):
     query_term = request.GET.get('q', '')
     location = request.GET.get('geo', '')
     original_term = request.GET.get('originalTerm', '')
@@ -168,6 +168,7 @@ def search_results(request, username, idtoken):
 
     # print(type(related_queries), related_queries)
     # print(type(related_topics), related_topics)
+    username = "evgen"
     context = {
         "username": username,
         "chart_data": chart_interest_data,
@@ -241,7 +242,7 @@ def recoverypassword(request):
     return render(request, 'recovery-password.html')
 
 
-@login_required
+# @login_required
 def settings(request, username, idtoken):
     interest_list = ["All Categories", "Brand", "Business", "Company", "Design", "Eco", "Education", "Fashion",
                      "Fitness", "Food", "Gaming", "Health", "Home", "Legal", "Lifestyle", "Luxury", "Marketing",
