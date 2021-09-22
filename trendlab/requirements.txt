@@ -7,7 +7,7 @@ cement==2.8.2
 certifi==2019.11.28
 chardet==3.0.4
 colorama==0.3.9
-django==3.0.2
+django==3.1.13
 docutils==0.15.2
 ecdsa==0.15
 future==0.16.0
